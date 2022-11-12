@@ -1,0 +1,14 @@
+import { Interval } from "../types/interval";
+
+export const fetchKLineData = async (
+  symbol: string,
+  interval: Interval,
+  limit: number
+) => {
+  const response = await fetch(
+    `/binance_kline?symbol=${symbol}&interval=${interval}&limit=${limit}`
+  );
+  const { klineData, avgPrice } = await response.json();
+
+  return { klineData, avgPrice };
+};
