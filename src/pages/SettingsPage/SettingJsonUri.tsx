@@ -67,7 +67,7 @@ export const SettingsJsonUri: React.FC<Props> = ({ onUpdate }) => {
 
     // fetch JSON file
     try {
-      const res = await fetch(`${config.API_URI}/settings`, {
+      const res = await fetch(`${config.API_URI}/api/settings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

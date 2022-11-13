@@ -7,7 +7,7 @@ export const fetchKLineData = async (
   limit: number
 ) => {
   const response = await fetch(
-    `${config.API_URI}/binance_kline?symbol=${symbol}&interval=${interval}&limit=${limit}`
+    `${config.API_URI}/api/binance_kline?symbol=${symbol}&interval=${interval}&limit=${limit}`
   );
   const { klineData, avgPrice } = await response.json();
 
