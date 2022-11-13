@@ -1,3 +1,3 @@
 export const config = {
-  API_URI: ""
+  API_URI: "https://crypto-stdev-express.vercel.app"
 };

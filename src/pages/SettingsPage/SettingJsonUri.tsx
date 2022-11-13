@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useLocalStorage } from "react-use";
 import { ToastContainer, toast } from "react-toastify";
 import { DEFAULT_SETTINGS } from "../../consts/DefaultSettings";
+import { config } from "../../config";
 
 const InputWrapper = styled.div`
   display: grid;
@@ -52,7 +53,7 @@ export const SettingsJsonUri: React.FC<Props> = ({ onUpdate }) => {
   };
 
   const { register, handleSubmit } = useForm<FieldValues>({
-    defaultValues: {},
+    defaultValues: {}
   });
 
   const onSubmit = async ({ settingsJsonUri }: FieldValues) => {
@@ -66,12 +67,12 @@ export const SettingsJsonUri: React.FC<Props> = ({ onUpdate }) => {
 
     // fetch JSON file
     try {
-      const res = await fetch("/settings", {
+      const res = await fetch(`${config.API_URI}/settings`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({ uri: settingsJsonUri }),
+        body: JSON.stringify({ uri: settingsJsonUri })
       });
 
       // parse JSON file
@@ -88,7 +89,7 @@ export const SettingsJsonUri: React.FC<Props> = ({ onUpdate }) => {
         toast.error(
           "Sorry, could not update settings. Keeping old settings untouched.",
           {
-            toastId: "Exception",
+            toastId: "Exception"
           }
         );
       }
@@ -96,7 +97,7 @@ export const SettingsJsonUri: React.FC<Props> = ({ onUpdate }) => {
       toast.error(
         "Sorry, could not update settings. Keeping old settings untouched.",
         {
-          toastId: "Exception",
+          toastId: "Exception"
         }
       );
     }

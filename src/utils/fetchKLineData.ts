@@ -1,3 +1,4 @@
+import { config } from "../config";
 import { Interval } from "../types/interval";
 
 export const fetchKLineData = async (
@@ -6,7 +7,7 @@ export const fetchKLineData = async (
   limit: number
 ) => {
   const response = await fetch(
-    `/binance_kline?symbol=${symbol}&interval=${interval}&limit=${limit}`
+    `${config.API_URI}/binance_kline?symbol=${symbol}&interval=${interval}&limit=${limit}`
   );
   const { klineData, avgPrice } = await response.json();
 
