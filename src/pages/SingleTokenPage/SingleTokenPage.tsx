@@ -43,7 +43,8 @@ const Form = styled.form`
     margin-bottom: 4px;
   }
 
-  input {
+  input,
+  select {
     width: 300px;
     padding: 10px;
 
@@ -170,11 +171,18 @@ export const SingleTokenPage: React.FC<Props> = () => {
 
         <FormGroup>
           <label htmlFor="interval">Interval</label>
-          <input
+          <select
             data-testid="input-interval"
-            id="interval"
             {...register("interval", { required: true })}
-          />
+          >
+            <option value="15m">15 minutes</option>
+            <option value="1h">1 hour</option>
+            <option value="4h">4 hours</option>
+            <option value="1d">1 day</option>
+            <option value="1w">1 week</option>
+            <option value="1m">1 month</option>
+          </select>
+
           {errors.interval && <p>This field is required</p>}
         </FormGroup>
 
