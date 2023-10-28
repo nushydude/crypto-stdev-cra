@@ -1,0 +1,51 @@
+name: Increment Build Number, Deploy and Vercel Production Deployment
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Increment build number
+        run: |
+          # Read the current build number
+          build_number=$(cat build-number.txt)
+
+          # Increment the build number
+          echo $(($build_number + 1)) > build-number.txt
+
+          # Commit and push the change
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add build-number.txt
+
+          # Amend the previous commit
+          git commit --amend --no-edit
+
+          # Force push with lease
+          git push --force-with-lease
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run:
+          vercel pull --yes --environment=production --token=${{
+          secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

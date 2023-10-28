@@ -1,0 +1,3 @@
+export enum FeatureEnum {
+  BOTTOM_MOUNTED_NAV_ON_MOBILE = 'BOTTOM_MOUNTED_NAV_ON_MOBILE',
+}
