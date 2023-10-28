@@ -26,7 +26,7 @@ export const DCAInfoWithChart = ({
         avgPrice={avgPrice}
         shouldDCA={shouldDCA}
       />
-      <KLineChart data={klineData} />
+      <KLineChart data={klineData} variant="detailed" />
     </Wrapper>
   );
 };

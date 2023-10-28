@@ -27,8 +27,6 @@ function hydrateInitialStateWithFeaturesFromCookies() {
     }
   }
 
-  console.log('initialState', initialState);
-
   return initialState;
 }
 

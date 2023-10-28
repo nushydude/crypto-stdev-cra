@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { useSymbols } from '../../hooks/useSymbols';
 import { FieldValues } from './types';
 import { Form, FormGroup } from './TokenOptionsForm.styles';
+import { TokensSelector } from '../../components/TokensSelector';
 
 type Props = {
   defaultValues: Partial<FieldValues>;
@@ -17,8 +17,6 @@ export const TokenOptionsForm = ({
   onSubmit,
   onValueChange,
 }: Props) => {
-  const { symbols } = useSymbols();
-
   const {
     register,
     handleSubmit,
@@ -43,21 +41,7 @@ export const TokenOptionsForm = ({
           control={control}
           name="symbol"
           render={({ field: { onChange, value } }) => (
-            <>
-              <input
-                data-testid="input-symbol"
-                id="symbol"
-                list="symbols"
-                value={value}
-                onChange={(e) => onChange(e.target.value.toUpperCase())}
-                required
-              />
-              <datalist id="symbols">
-                {symbols.map((symbol, index) => (
-                  <option key={index} value={symbol} />
-                ))}
-              </datalist>
-            </>
+            <TokensSelector selectedValue={value} onChange={onChange} />
           )}
         />
 
