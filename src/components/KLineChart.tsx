@@ -31,7 +31,7 @@ export const KLineChart: React.FC<Props> = ({ data, variant = 'detailed' }) => {
       }}
       options={{
         responsive: true,
-        maintainAspectRatio: variant === 'detailed',
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             display: false,
