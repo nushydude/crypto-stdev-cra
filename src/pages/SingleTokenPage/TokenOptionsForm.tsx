@@ -35,7 +35,7 @@ export const TokenOptionsForm = ({
       data-testid="form-symbol-interval-limit"
       className="grid gap-2 grid-cols-1 mb-4"
     >
-      <div className="mb-4">
+      <div className="mb-2 md:mb-4">
         <label htmlFor="symbol" className="mb-1 block">
           Symbol
         </label>
@@ -47,30 +47,39 @@ export const TokenOptionsForm = ({
           )}
         />
 
-        {errors.symbol && <p>This field is required</p>}
+        {errors.symbol && (
+          <p className="text-red-400 text-sm">This field is required</p>
+        )}
       </div>
 
-      <div className="mb-4">
+      <div className="mb-2 md:mb-4">
         <label htmlFor="interval" className="mb-1 block">
           Interval
         </label>
-        <select
-          data-testid="input-interval"
-          className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          {...register('interval', { required: true })}
-        >
-          <option value="15m">15 minutes</option>
-          <option value="1h">1 hour</option>
-          <option value="4h">4 hours</option>
-          <option value="1d">1 day</option>
-          <option value="1w">1 week</option>
-          <option value="1m">1 month</option>
-        </select>
+        <div className="relative">
+          <select
+            data-testid="input-interval"
+            className="appearance-none w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            {...register('interval', { required: true })}
+          >
+            <option value="15m">15 minutes</option>
+            <option value="1h">1 hour</option>
+            <option value="4h">4 hours</option>
+            <option value="1d">1 day</option>
+            <option value="1w">1 week</option>
+            <option value="1m">1 month</option>
+          </select>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-blue-500">
+            ▼
+          </div>
+        </div>
 
-        {errors.interval && <p>This field is required</p>}
+        {errors.interval && (
+          <p className="text-red-400 text-sm">This field is required</p>
+        )}
       </div>
 
-      <div className="mb-4">
+      <div className="mb-2 md:mb-4">
         <label htmlFor="limit" className="mb-1 block">
           Limit
         </label>
@@ -78,10 +87,12 @@ export const TokenOptionsForm = ({
           data-testid="input-limit"
           id="limit"
           type="number"
-          className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           {...register('limit', { required: true })}
         />
-        {errors.limit && <p>This field is required</p>}
+        {errors.limit && (
+          <p className="text-red-400 text-sm">This field is required</p>
+        )}
       </div>
 
       <button

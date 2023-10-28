@@ -115,7 +115,7 @@ export const SettingsJsonUri: React.FC<Props> = ({ onUpdate }) => {
             id="settingsJsonUri"
             defaultValue={uri}
             title={uri}
-            className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             {...register('settingsJsonUri')}
           />
 

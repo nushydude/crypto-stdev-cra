@@ -29,7 +29,7 @@ export const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
   const { data, fetchStatus } = useBinanceKLine(klineFetchConfigs);
 
   if (fetchStatus === FETCH_STATUS.fetching) {
-    return <Skeleton rows={5} />;
+    return <Skeleton rows={klineFetchConfigs.length} />;
   }
 
   const sortedByLargestDip = getTransformedKLineDataSortedByDipMemoized(
