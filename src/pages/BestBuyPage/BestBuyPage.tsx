@@ -1,34 +1,19 @@
 import { useLocalStorage } from 'react-use';
 import { DCAInfo } from '../../components/DCAInfo';
 import { useBinanceKLine } from '../../hooks/useBinanceKline';
-import { Interval } from '../../types/interval';
-import { calculateMean } from '../../utils/calculateMean';
-import { calculateStandardDeviation } from '../../utils/calculateStandardDeviation';
 import { FETCH_STATUS } from '../../consts/FetchStatus';
-import { DEFAULT_SYMBOLS } from '../../consts/DefaultSymbols';
 import { DEFAULT_SETTINGS } from '../../consts/DefaultSettings';
 import { KLineChart } from '../../components/KLineChart';
 import { Skeleton } from './Skeleton';
 import { Column, DCAInfoContainer, Row } from './BestBuyPage.styles';
-
-const defaultInterval: Interval = '4h';
-const defaultLimit = 100;
+import { getKLineConfigs } from './getKLineConfigs';
+import { getTransformedKLineDataSortedByDipMemoized } from './getTransformedKLineDataSortedByDip';
+import { useMemo } from 'react';
 
 interface Props {
+  // Best Buy and Best DCA are separated by a multiplier.
   sdMultiplier?: number;
 }
-
-const getSymbols = (settings: any) => {
-  try {
-    const symbols = JSON.parse(settings)?.bestBuySymbols;
-
-    return Array.isArray(symbols) && symbols.length > 0
-      ? symbols
-      : DEFAULT_SYMBOLS;
-  } catch (error) {
-    return DEFAULT_SYMBOLS;
-  }
-};
 
 export const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
   const [settings] = useLocalStorage(
@@ -36,35 +21,24 @@ export const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
     JSON.stringify(DEFAULT_SETTINGS),
   );
 
-  const { data, fetchStatus } = useBinanceKLine(
-    getSymbols(settings).map((symbol) => ({
-      symbol,
-      interval: defaultInterval,
-      limit: defaultLimit,
-    })),
+  const klineFetchConfigs = useMemo(
+    () => getKLineConfigs(settings),
+    [settings],
   );
 
-  const sortedByLargestDip = data
-    .map(({ symbol, klineData, avgPrice }) => {
-      const prices = klineData.map((d) => d.openPrice);
-      const standardDeviation = calculateStandardDeviation(prices);
-      const mean = calculateMean(prices);
-      const targetPrice = mean - sdMultiplier * standardDeviation;
-      const shouldDCA: boolean = avgPrice < targetPrice;
-      const dip = ((avgPrice - targetPrice) / targetPrice) * 100;
-
-      return { symbol, shouldDCA, targetPrice, avgPrice, dip, klineData };
-    })
-    // sort by highest to lowest (i.e. highest *negative* value first)
-    .sort((a, b) => a.dip - b.dip);
-
-  const bestDCAIndex = sortedByLargestDip.findIndex(
-    ({ shouldDCA }) => shouldDCA,
-  );
+  const { data, fetchStatus } = useBinanceKLine(klineFetchConfigs);
 
   if (fetchStatus === FETCH_STATUS.fetching) {
     return <Skeleton rows={5} />;
   }
+
+  const sortedByLargestDip = getTransformedKLineDataSortedByDipMemoized(
+    data,
+    sdMultiplier,
+  );
+
+  // Since we have sorted by dip, the first item is potentially the bestDCA item.
+  const bestDCAIndex = sortedByLargestDip[0]?.shouldDCA ? 0 : -1;
 
   return (
     <div>
