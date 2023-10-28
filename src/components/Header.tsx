@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useMeasure } from 'react-use';
 import styled from 'styled-components';
+import { config } from '../config';
 import { routes } from '../config/routes';
 import { HamburgerMenu } from './HamburgerMenu';
 import { PageTitle } from './PageTitle';
@@ -92,7 +93,7 @@ export const Header = () => {
           <PageTitle />
         </MobileContainer>
 
-        <Version>build {process.env.REACT_APP_BUILD_NUMBER}</Version>
+        <Version>build {config.BUILD_NUMBER}</Version>
       </InternalWrapper>
     </Wrapper>
   );
