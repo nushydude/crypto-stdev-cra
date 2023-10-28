@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: row;
   padding-top: 20px;
 
-  @media (max-width: 690px) {
+  @media (max-width: 640px) {
     flex-direction: column;
     padding-left: 10px;
     padding-right: 10px;
@@ -18,7 +18,7 @@ export const FormContainer = styled.div`
   margin-top: 0;
   margin-right: 20px;
 
-  @media (max-width: 690px) {
+  @media (max-width: 640px) {
     width: 100%;
     margin-top: 20px;
     margin-right: 0;

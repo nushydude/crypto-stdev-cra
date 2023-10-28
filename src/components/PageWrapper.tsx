@@ -10,7 +10,7 @@ export const PageWrapper = styled.div`
   flex-grow: 1;
   padding-top: 50px;
 
-  @media (max-width: 690px) {
+  @media (max-width: 640px) {
     padding-top: 74px;
   }
 `;

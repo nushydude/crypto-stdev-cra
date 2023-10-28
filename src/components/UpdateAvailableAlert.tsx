@@ -1,29 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
-
-const ButtonCotainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const Spacer = styled.div`
-  width: 8px;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-`;
-
-const MessageContainer = styled.div``;
-
-const MessageText = styled.p`
-  margin-bottom: 16px;
-`;
+import {
+  Button,
+  ButtonCotainer,
+  MessageText,
+  Spacer,
+} from './UpdateAvailableAlert.styles';
 
 // closeToast is injected by react-toastify
 export const UpdateAvailableAlert = ({ closeToast }: any) => {
   return (
-    <MessageContainer>
+    <div>
       <MessageText>An update to the app is available</MessageText>
 
       <ButtonCotainer>
@@ -39,6 +24,6 @@ export const UpdateAvailableAlert = ({ closeToast }: any) => {
 
         <Button onClick={closeToast}>Update later</Button>
       </ButtonCotainer>
-    </MessageContainer>
+    </div>
   );
 };

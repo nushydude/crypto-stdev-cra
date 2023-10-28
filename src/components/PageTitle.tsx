@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
 import { routes } from '../config/routes';
+import { Span } from './PageTitle.styles';
 
 const pageTitles = {
   [routes.BEST_BUY]: 'Best Buy',
@@ -8,13 +8,6 @@ const pageTitles = {
   [routes.SETTINGS]: 'Settings',
   [routes.SINGLE]: 'Single token',
 };
-
-const Span = styled.span`
-  color: white;
-  display: inline-block;
-  margin-left: 20px;
-  font-weight: bold;
-`;
 
 export const PageTitle = () => {
   const location = useLocation();

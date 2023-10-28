@@ -31,7 +31,7 @@ export const DCAInfoContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
 
-  @media (max-width: 690px) {
+  @media (max-width: 640px) {
     flex-direction: column;
   }
 `;
@@ -39,7 +39,7 @@ export const DCAInfoContainer = styled.div`
 export const Column = styled.div`
   width: 50%;
 
-  @media (max-width: 690px) {
+  @media (max-width: 640px) {
     width: 100%;
   }
 `;

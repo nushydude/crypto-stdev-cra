@@ -1,11 +1,4 @@
-import React from 'react';
-import styled from 'styled-components';
-
-const Container = styled.div`
-  p {
-    margin-bottom: 8px;
-  }
-`;
+import { Text } from './DCAInfo.styles';
 
 interface Props {
   targetPrice: number;
@@ -17,18 +10,18 @@ export const DCAInfo = ({ targetPrice, avgPrice, shouldDCA }: Props) => {
   const dip = ((avgPrice - targetPrice) / targetPrice) * 100;
 
   return (
-    <Container data-testid="dca-info">
-      <p>Target price = {targetPrice.toFixed(4)}</p>
-      <p>Spot price = {avgPrice.toFixed(4)}</p>
-      <p>
+    <div data-testid="dca-info">
+      <Text>Target price = {targetPrice.toFixed(4)}</Text>
+      <Text>Spot price = {avgPrice.toFixed(4)}</Text>
+      <Text>
         {dip > 0 ? 'Rise' : 'Dip'} from target price ={' '}
         {Math.abs(dip).toFixed(2)}%
-      </p>
-      <p>
+      </Text>
+      <Text>
         <strong>
           Buy the dip? {shouldDCA ? 'Yes, DCA now.' : 'No, try again later.'}
         </strong>
-      </p>
-    </Container>
+      </Text>
+    </div>
   );
 };

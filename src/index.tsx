@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Chart as ChartJS, registerables } from 'chart.js';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import { App } from './App';
 // import * as serviceWorkerRegistration from './serviceWorkerRegistration';
