@@ -5,10 +5,10 @@ import { FETCH_STATUS } from '../../consts/FetchStatus';
 import { DEFAULT_SETTINGS } from '../../consts/DefaultSettings';
 import { KLineChart } from '../../components/KLineChart';
 import { Skeleton } from './Skeleton';
-import { Column, DCAInfoContainer, Row } from './BestBuyPage.styles';
 import { getKLineConfigs } from './getKLineConfigs';
 import { getTransformedKLineDataSortedByDipMemoized } from './getTransformedKLineDataSortedByDip';
 import { useMemo } from 'react';
+import { BestBuyItem } from './BestBuyItem';
 
 interface Props {
   // Best Buy and Best DCA are separated by a multiplier.
@@ -43,21 +43,21 @@ export const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
   return (
     <div>
       {sortedByLargestDip.map((dataItem, index) => (
-        <Row
+        <BestBuyItem
           key={dataItem.symbol}
           best={bestDCAIndex === index}
           dca={dataItem.shouldDCA}
         >
-          <h2>{dataItem.symbol}</h2>
-          <DCAInfoContainer>
-            <Column>
+          <h2 className="mb-2">{dataItem.symbol}</h2>
+          <div className="flex justify-between flex-col sm:flex-row">
+            <div className="sm:w-100 md:w-2/4">
               <DCAInfo {...dataItem} />
-            </Column>
-            <Column>
+            </div>
+            <div className="sm:w-100 md:w-2/4">
               <KLineChart data={dataItem.klineData} variant="summary" />
-            </Column>
-          </DCAInfoContainer>
-        </Row>
+            </div>
+          </div>
+        </BestBuyItem>
       ))}
     </div>
   );

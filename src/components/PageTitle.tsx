@@ -1,6 +1,5 @@
 import { useLocation } from 'react-router-dom';
 import { routes } from '../config/routes';
-import { Span } from './PageTitle.styles';
 
 const pageTitles = {
   [routes.BEST_BUY]: 'Best Buy',
@@ -12,5 +11,9 @@ const pageTitles = {
 export const PageTitle = () => {
   const location = useLocation();
 
-  return <Span>{pageTitles[location.pathname]}</Span>;
+  return (
+    <span className="text-white inline-block ml-5 font-bold">
+      {pageTitles[location.pathname]}
+    </span>
+  );
 };

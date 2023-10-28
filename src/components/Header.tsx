@@ -3,13 +3,6 @@ import { useMeasure } from 'react-use';
 import { config } from '../config';
 import { routes } from '../config/routes';
 import { HamburgerMenu } from './HamburgerMenu';
-import {
-  DesktopLinks,
-  InternalWrapper,
-  MobileContainer,
-  Version,
-  Wrapper,
-} from './Header.styles';
 import { PageTitle } from './PageTitle';
 
 const links = [
@@ -23,23 +16,37 @@ export const Header = () => {
   const [ref, { height }] = useMeasure<HTMLDivElement>();
 
   return (
-    <Wrapper data-testid="header">
-      <InternalWrapper ref={ref}>
-        <DesktopLinks>
+    <div
+      data-testid="header"
+      className="px-2 bg-black text-white mb-2 fixed h-14 top-0 left-0 right-0 z-10 shadow-sm pt-4 pb-4 sm:h-10 sm:pt-2 sm:pb-2"
+    >
+      <div
+        ref={ref}
+        className="max-w-7xl mx-auto px-2 flex justify-between align-middle"
+      >
+        <div className="hidden sm:block">
           {links.map(({ to, label }, idx) => (
-            <NavLink key={idx} to={to} activeStyle={{ fontWeight: 'bold' }}>
+            <NavLink
+              className="mr-4 text-white hover:text-gray-300"
+              key={idx}
+              to={to}
+              activeStyle={{ fontWeight: 'bold' }}
+            >
               {label}
             </NavLink>
           ))}
-        </DesktopLinks>
+        </div>
 
-        <MobileContainer data-testid="mobile-container">
+        <div
+          data-testid="mobile-container"
+          className="flex align-middle sm:hidden"
+        >
           <HamburgerMenu links={links} headerHeight={height} />
           <PageTitle />
-        </MobileContainer>
+        </div>
 
-        <Version>build {config.BUILD_NUMBER}</Version>
-      </InternalWrapper>
-    </Wrapper>
+        <span className="inline-block">build {config.BUILD_NUMBER}</span>
+      </div>
+    </div>
   );
 };

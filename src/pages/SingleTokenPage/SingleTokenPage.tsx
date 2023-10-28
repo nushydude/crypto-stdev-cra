@@ -8,12 +8,6 @@ import { TokenOptionsForm } from './TokenOptionsForm';
 import getDisplayData from './getDisplayData';
 import { getDefaultTokenOptions } from './getDefaultTokenOptions';
 import { TokenContent } from './TokenContent';
-import {
-  Container,
-  DataContainer,
-  FormContainer,
-  Heading,
-} from './SingleTokenPage.styles';
 
 type FieldValues = {
   symbol: string;
@@ -50,21 +44,23 @@ export const SingleTokenPage = () => {
   );
 
   return (
-    <Container>
-      <FormContainer>
+    <div className="flex flex-col px-2 md:flex-row md:px-0 md:pt-4">
+      <div className="w-full mt-4 mr-0 md:w-60 md:flex-shrink-0 md:mt-0 md:mr-4">
         <TokenOptionsForm
           defaultValues={getDefaultTokenOptions(qs.parse(location.search))}
           allowSubmission={fetchStatus !== FETCH_STATUS.fetching}
           onSubmit={onSubmit}
           onValueChange={onFormValueChange}
         />
-      </FormContainer>
+      </div>
 
       {/* Display the results and graph */}
-      <DataContainer data-testid="data-container">
-        <Heading>Result:</Heading>
+      <div
+        data-testid="data-container"
+        className="min-w-0 flex-1 p-2 bg-sky-100 border-solid border-1 border-sky-200"
+      >
         <TokenContent status={fetchStatus} {...getDisplayData(data)} />
-      </DataContainer>
-    </Container>
+      </div>
+    </div>
   );
 };

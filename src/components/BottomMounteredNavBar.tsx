@@ -1,5 +1,7 @@
-import { Container } from './HamburgerMenu.styles';
-
 export const BottomMounteredNavBar = () => {
-  return <Container>BottomMounteredNavBar</Container>;
+  return (
+    <div className="fixed bottom-0 left-0 right-0 bg-black text-white p-2 shadow-md z-10 h-20">
+      BottomMounteredNavBar
+    </div>
+  );
 };

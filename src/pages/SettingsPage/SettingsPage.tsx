@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { CurrentSettings } from './CurrentSettings';
 import { SettingsJsonUri } from './SettingJsonUri';
-
-const Row = styled.div`
-  margin: 10px 0;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ccc;
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
 
 export const Settingspage: React.FC = () => {
   // This is a hack.
@@ -26,12 +15,12 @@ export const Settingspage: React.FC = () => {
 
   return (
     <>
-      <Row>
+      <div className="mb-2 py-4 border-solid border-b-2 border-gray-300">
         <SettingsJsonUri onUpdate={incrementKeyValueToForceUpdate} />
-      </Row>
-      <Row>
+      </div>
+      <div className="mb-2 py-4">
         <CurrentSettings key={value} />
-      </Row>
+      </div>
     </>
   );
 };

@@ -1,29 +1,28 @@
-import {
-  Button,
-  ButtonCotainer,
-  MessageText,
-  Spacer,
-} from './UpdateAvailableAlert.styles';
-
 // closeToast is injected by react-toastify
 export const UpdateAvailableAlert = ({ closeToast }: any) => {
   return (
     <div>
-      <MessageText>An update to the app is available</MessageText>
+      <p className="mb-4">An update to the app is available</p>
 
-      <ButtonCotainer>
-        <Button
+      <div className="flex justify-center">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={() => {
             window.location.reload();
           }}
         >
           Update now
-        </Button>
+        </button>
 
-        <Spacer />
+        <div className="w-2" />
 
-        <Button onClick={closeToast}>Update later</Button>
-      </ButtonCotainer>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={closeToast}
+        >
+          Update later
+        </button>
+      </div>
     </div>
   );
 };

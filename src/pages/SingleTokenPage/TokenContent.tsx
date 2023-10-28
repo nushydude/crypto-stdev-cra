@@ -2,7 +2,6 @@ import BeatLoader from 'react-spinners/BeatLoader';
 import { FETCH_STATUS } from '../../consts/FetchStatus';
 import { FetchStatus } from '../../types/fetchStatus';
 import { DCAInfoWithChart } from './DCAInfoWithChart';
-import { LoadingWrapper } from './TokenContent.styles';
 
 type Props = {
   status: FetchStatus;
@@ -35,9 +34,12 @@ export const TokenContent = ({
       );
     case FETCH_STATUS.fetching:
       return (
-        <LoadingWrapper data-testid="loading-animation">
+        <div
+          data-testid="loading-animation"
+          className="w-full flex justify-center align-middle"
+        >
           <BeatLoader />
-        </LoadingWrapper>
+        </div>
       );
     case FETCH_STATUS.idle:
       return <p>Click submit to fetch latest kline data.</p>;

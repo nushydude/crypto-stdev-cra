@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { FieldValues } from './types';
-import { Form, FormGroup } from './TokenOptionsForm.styles';
 import { TokensSelector } from '../../components/TokensSelector';
 
 type Props = {
@@ -31,12 +30,15 @@ export const TokenOptionsForm = ({
   }, [watch, onValueChange]);
 
   return (
-    <Form
+    <form
       onSubmit={handleSubmit(onSubmit)}
       data-testid="form-symbol-interval-limit"
+      className="grid gap-2 grid-cols-1 mb-4"
     >
-      <FormGroup>
-        <label htmlFor="symbol">Symbol</label>
+      <div className="mb-4">
+        <label htmlFor="symbol" className="mb-1 block">
+          Symbol
+        </label>
         <Controller
           control={control}
           name="symbol"
@@ -46,12 +48,15 @@ export const TokenOptionsForm = ({
         />
 
         {errors.symbol && <p>This field is required</p>}
-      </FormGroup>
+      </div>
 
-      <FormGroup>
-        <label htmlFor="interval">Interval</label>
+      <div className="mb-4">
+        <label htmlFor="interval" className="mb-1 block">
+          Interval
+        </label>
         <select
           data-testid="input-interval"
+          className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           {...register('interval', { required: true })}
         >
           <option value="15m">15 minutes</option>
@@ -63,26 +68,30 @@ export const TokenOptionsForm = ({
         </select>
 
         {errors.interval && <p>This field is required</p>}
-      </FormGroup>
+      </div>
 
-      <FormGroup>
-        <label htmlFor="limit">Limit</label>
+      <div className="mb-4">
+        <label htmlFor="limit" className="mb-1 block">
+          Limit
+        </label>
         <input
           data-testid="input-limit"
           id="limit"
           type="number"
+          className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           {...register('limit', { required: true })}
         />
         {errors.limit && <p>This field is required</p>}
-      </FormGroup>
+      </div>
 
       <button
         data-testid="submit-button"
         type="submit"
         disabled={!allowSubmission}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Submit
       </button>
-    </Form>
+    </form>
   );
 };

@@ -1,30 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  position: relative;
-`;
-
-export const HamburgerMenuMobile = styled.button<{ menuVisible: boolean }>`
-  display: none;
-  justify-content: space-between;
-  flex-direction: column;
-  height: 24px;
-  width: 24px;
-
-  /* disable all inherent styles */
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-
-  @media (max-width: 640px) {
-    display: flex;
-  }
-`;
-
 export const Bar = styled.div<{ menuVisible?: boolean }>`
   height: 4px;
   background-color: white;
@@ -88,10 +63,4 @@ export const MenuContainer = styled.div<{
     text-decoration: underline;
     color: white;
   }
-`;
-
-export const MenuItem = styled.div`
-  width: 100%;
-  padding: 20px;
-  border-bottom: 1px solid #ccc;
 `;

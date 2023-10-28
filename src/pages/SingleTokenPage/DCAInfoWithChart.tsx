@@ -1,6 +1,5 @@
 import { DCAInfo } from '../../components/DCAInfo';
 import { KLineChart } from '../../components/KLineChart';
-import { Wrapper } from './DCAInfoWithChart.styles';
 
 type Props = {
   targetPrice: number;
@@ -20,13 +19,13 @@ export const DCAInfoWithChart = ({
   klineData,
 }: Props) => {
   return (
-    <Wrapper>
+    <div className="w-full">
       <DCAInfo
         targetPrice={targetPrice}
         avgPrice={avgPrice}
         shouldDCA={shouldDCA}
       />
       <KLineChart data={klineData} variant="detailed" />
-    </Wrapper>
+    </div>
   );
 };

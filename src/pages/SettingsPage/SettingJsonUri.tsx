@@ -1,35 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import styled from 'styled-components';
 import { useLocalStorage } from 'react-use';
 import { toast, ToastPosition } from 'react-toastify';
 import { DEFAULT_SETTINGS } from '../../consts/DefaultSettings';
 import { config } from '../../config';
-
-const InputWrapper = styled.div`
-  display: grid;
-  grid-gap: 8px;
-  grid-template-columns: 1fr 70px;
-  margin-bottom: 20px;
-`;
-
-const Form = styled.form`
-  h3 {
-    margin-bottom: 8px;
-  }
-
-  input {
-    width: 100%;
-    padding: 10px;
-    /* move to global style */
-    margin: 0;
-    box-sizing: border-box;
-  }
-
-  button {
-    padding: 10px;
-  }
-`;
 
 const toastOptions = {
   position: 'top-center' as ToastPosition,
@@ -133,26 +107,38 @@ export const SettingsJsonUri: React.FC<Props> = ({ onUpdate }) => {
 
   return (
     <div>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <h3>Settings JSON URI</h3>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <h3 className="mb-4 font-bold">Settings JSON URI</h3>
 
-        <InputWrapper>
+        <div className="grid gap-2 mb-4 grid-cols-settings-upload">
           <input
             id="settingsJsonUri"
             defaultValue={uri}
             title={uri}
+            className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             {...register('settingsJsonUri')}
           />
 
-          <button type="submit">{uri ? 'Update' : 'Save'}</button>
-        </InputWrapper>
-      </Form>
-      <p>Note:</p> <p></p>If using a shared link from Google Drive, make sure to
-      run it through{' '}
-      <a href="https://sites.google.com/site/gdocs2direct/">
-        Google Drive Direct Link Generator
-      </a>{' '}
-      first to get the direct link and paste it in the box above.
+          <button
+            className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            type="submit"
+          >
+            {uri ? 'Update' : 'Save'}
+          </button>
+        </div>
+      </form>
+
+      <p className="font-bold">Note:</p>
+      <p>
+        If using a shared link from Google Drive, make sure to run it through{' '}
+        <a
+          href="https://sites.google.com/site/gdocs2direct/"
+          className="text-blue-700 hover:underline"
+        >
+          Google Drive Direct Link Generator
+        </a>{' '}
+        first to get the direct link and paste it in the box above.
+      </p>
     </div>
   );
 };

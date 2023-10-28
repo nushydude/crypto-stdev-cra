@@ -1,18 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useLocalStorage } from 'react-use';
 import { JsonViewer } from '@textea/json-viewer';
 import { DEFAULT_SETTINGS } from '../../consts/DefaultSettings';
-
-const Container = styled.div`
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-`;
-
-const Heading = styled.h3`
-  margin-bottom: 8px;
-`;
 
 export const CurrentSettings: React.FC = () => {
   const [settings] = useLocalStorage(
@@ -32,11 +21,12 @@ export const CurrentSettings: React.FC = () => {
   };
 
   return (
-    <Container>
-      <Heading>
-        Current settings{''}{' '}
+    <div className="w-full max-w-full overflow-hidden">
+      <h3 className="mb-2 font-bold">
+        Current Settings
         {settings ? (
           <button
+            className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
             onClick={async () => {
               await downloadJSON();
             }}
@@ -44,9 +34,9 @@ export const CurrentSettings: React.FC = () => {
             Download
           </button>
         ) : null}
-      </Heading>
+      </h3>
 
       {settings ? <JsonViewer value={JSON.parse(settings)} /> : null}
-    </Container>
+    </div>
   );
 };

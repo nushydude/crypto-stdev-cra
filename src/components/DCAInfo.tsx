@@ -1,5 +1,3 @@
-import { Text } from './DCAInfo.styles';
-
 interface Props {
   targetPrice: number;
   avgPrice: number;
@@ -11,17 +9,17 @@ export const DCAInfo = ({ targetPrice, avgPrice, shouldDCA }: Props) => {
 
   return (
     <div data-testid="dca-info">
-      <Text>Target price = {targetPrice.toFixed(4)}</Text>
-      <Text>Spot price = {avgPrice.toFixed(4)}</Text>
-      <Text>
+      <p className="mb-1">Target price = {targetPrice.toFixed(4)}</p>
+      <p className="mb-1">Spot price = {avgPrice.toFixed(4)}</p>
+      <p className="mb-1">
         {dip > 0 ? 'Rise' : 'Dip'} from target price ={' '}
         {Math.abs(dip).toFixed(2)}%
-      </Text>
-      <Text>
+      </p>
+      <p className="mb-1">
         <strong>
           Buy the dip? {shouldDCA ? 'Yes, DCA now.' : 'No, try again later.'}
         </strong>
-      </Text>
+      </p>
     </div>
   );
 };

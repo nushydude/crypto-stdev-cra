@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom';
 import { useClickAway, useMedia } from 'react-use';
 import {
   BottomBar,
-  Container,
-  HamburgerMenuMobile,
   MenuContainer,
-  MenuItem,
   MiddleBar,
   TopBar,
 } from './HamburgerMenu.styles';
@@ -32,23 +29,28 @@ export const HamburgerMenu = ({ headerHeight, links }: Props) => {
   }, [isMobile, menuVisible]);
 
   return (
-    <Container ref={ref}>
-      <HamburgerMenuMobile
+    <div className="relative" ref={ref}>
+      <button
         onClick={() => setMenuVisible((visible) => !visible)}
-        menuVisible={menuVisible}
+        className="flex flex-col justify-between h-6 w-6 bg-transparent border-none outline-none cursor-pointer"
       >
         <TopBar menuVisible={menuVisible} />
         <MiddleBar menuVisible={menuVisible} />
         <BottomBar menuVisible={menuVisible} />
-      </HamburgerMenuMobile>
+      </button>
 
       <MenuContainer menuVisible={menuVisible} offsetTop={headerHeight}>
         {links.map(({ to, label }, idx) => (
           <Link key={idx} to={to}>
-            <MenuItem onClick={() => setMenuVisible(false)}>{label}</MenuItem>
+            <div
+              className="w-full p-4 border-b-2 border-solid border-gray-300 hover:bg-gray-700 hover:text-white"
+              onClick={() => setMenuVisible(false)}
+            >
+              {label}
+            </div>
           </Link>
         ))}
       </MenuContainer>
-    </Container>
+    </div>
   );
 };
