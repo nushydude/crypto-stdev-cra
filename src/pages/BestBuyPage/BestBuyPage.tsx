@@ -48,7 +48,7 @@ export const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
           best={bestDCAIndex === index}
           dca={dataItem.shouldDCA}
         >
-          <h2 className="mb-2">{dataItem.symbol}</h2>
+          <h2 className="mb-2 font-bold text-lg">{dataItem.symbol}</h2>
           <div className="flex justify-between flex-col sm:flex-row">
             <div className="sm:w-100 md:w-2/4">
               <DCAInfo {...dataItem} />

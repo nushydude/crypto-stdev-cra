@@ -15,10 +15,8 @@ export const DCAInfo = ({ targetPrice, avgPrice, shouldDCA }: Props) => {
         {dip > 0 ? 'Rise' : 'Dip'} from target price ={' '}
         {Math.abs(dip).toFixed(2)}%
       </p>
-      <p className="mb-1">
-        <strong>
-          Buy the dip? {shouldDCA ? 'Yes, DCA now.' : 'No, try again later.'}
-        </strong>
+      <p className="mb-1 font-bold">
+        Buy the dip? {shouldDCA ? 'Yes, DCA now.' : 'No, try again later.'}
       </p>
     </div>
   );
