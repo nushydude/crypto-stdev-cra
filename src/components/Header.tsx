@@ -6,10 +6,10 @@ import { HamburgerMenu } from './HamburgerMenu';
 import { PageTitle } from './PageTitle';
 
 const links = [
-  { to: routes.SINGLE, label: 'Single Token' },
-  { to: routes.BEST_DCA, label: 'Best DCA' },
-  { to: routes.BEST_BUY, label: 'Best Buy' },
-  { to: routes.SETTINGS, label: 'Settings' },
+  { to: routes.SINGLE, label: 'Single Token', icon: '📈' },
+  { to: routes.BEST_DCA, label: 'Best DCA', icon: '🏆' },
+  { to: routes.BEST_BUY, label: 'Best Buy', icon: '🏆' },
+  { to: routes.SETTINGS, label: 'Settings', icon: '⚙️' },
 ];
 
 export const Header = () => {
@@ -25,14 +25,14 @@ export const Header = () => {
         className="max-w-7xl mx-auto px-2 flex justify-between align-middle"
       >
         <div className="hidden sm:block">
-          {links.map(({ to, label }, idx) => (
+          {links.map(({ to, label, icon }, idx) => (
             <NavLink
-              className="mr-4 text-white hover:text-gray-300"
+              className="mr-8 text-white hover:text-gray-300"
               key={idx}
               to={to}
               activeStyle={{ fontWeight: 'bold' }}
             >
-              {label}
+              {icon} {label}
             </NavLink>
           ))}
         </div>

@@ -45,7 +45,7 @@ export const SingleTokenPage = () => {
 
   return (
     <div className="flex flex-col px-2 md:flex-row md:px-0 md:pt-4">
-      <div className="w-full mt-4 mr-0 md:w-60 md:flex-shrink-0 md:mt-0 md:mr-4">
+      <div className="w-full mr-0 md:w-60 md:flex-shrink-0 md:mr-4">
         <TokenOptionsForm
           defaultValues={getDefaultTokenOptions(qs.parse(location.search))}
           allowSubmission={fetchStatus !== FETCH_STATUS.fetching}

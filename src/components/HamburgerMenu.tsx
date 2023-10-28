@@ -9,7 +9,7 @@ import {
 } from './HamburgerMenu.styles';
 
 type Props = {
-  links: Array<{ to: string; label: string }>;
+  links: Array<{ to: string; label: string; icon: string }>;
   headerHeight: number;
 };
 
@@ -40,13 +40,13 @@ export const HamburgerMenu = ({ headerHeight, links }: Props) => {
       </button>
 
       <MenuContainer menuVisible={menuVisible} offsetTop={headerHeight}>
-        {links.map(({ to, label }, idx) => (
+        {links.map(({ to, label, icon }, idx) => (
           <Link key={idx} to={to}>
             <div
               className="w-full p-4 border-b-2 border-solid border-gray-300 hover:bg-gray-700 hover:text-white"
               onClick={() => setMenuVisible(false)}
             >
-              {label}
+              {icon} {label}
             </div>
           </Link>
         ))}
