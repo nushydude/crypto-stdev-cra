@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocalStorage } from 'react-use';
 import { toast, ToastPosition } from 'react-toastify';
+import { MdUploadFile } from 'react-icons/md';
 import { DEFAULT_SETTINGS } from '../../consts/DefaultSettings';
 import { config } from '../../config';
 
@@ -120,10 +121,11 @@ export const SettingsJsonUri: React.FC<Props> = ({ onUpdate }) => {
           />
 
           <button
-            className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="flex items-center ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             type="submit"
           >
-            {uri ? 'Update' : 'Save'}
+            <MdUploadFile className="mr-1" />
+            <span className="block">{uri ? 'Update' : 'Save'}</span>
           </button>
         </div>
       </form>

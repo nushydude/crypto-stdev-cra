@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocalStorage } from 'react-use';
 import { JsonViewer } from '@textea/json-viewer';
+import { MdFileDownload } from 'react-icons/md';
 import { DEFAULT_SETTINGS } from '../../consts/DefaultSettings';
 
 export const CurrentSettings: React.FC = () => {
@@ -22,19 +23,22 @@ export const CurrentSettings: React.FC = () => {
 
   return (
     <div className="w-full max-w-full overflow-hidden">
-      <h3 className="mb-2 font-bold">
-        Current Settings
-        {settings ? (
+      <div className="flex items-center mb-4">
+        <h3 className="font-bold">Current Settings</h3>
+
+        {settings && (
           <button
-            className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+            className="flex items-center ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
             onClick={async () => {
+              // we don't need to await this, right?
               await downloadJSON();
             }}
           >
-            Download
+            <MdFileDownload className="mr-1" />
+            <span>Download</span>
           </button>
-        ) : null}
-      </h3>
+        )}
+      </div>
 
       {settings ? <JsonViewer value={JSON.parse(settings)} /> : null}
     </div>

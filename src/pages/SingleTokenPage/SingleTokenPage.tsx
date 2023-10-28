@@ -57,7 +57,7 @@ export const SingleTokenPage = () => {
       {/* Display the results and graph */}
       <div
         data-testid="data-container"
-        className="min-w-0 flex-1 p-2 bg-sky-100 border-solid border-1 border-sky-200"
+        className="min-w-0 flex-1 p-2 bg-sky-100 border-solid border-1 border-sky-200 rounded-lg"
       >
         <TokenContent status={fetchStatus} {...getDisplayData(data)} />
       </div>

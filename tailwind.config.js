@@ -9,7 +9,7 @@ module.exports = {
         18: '72px',
       },
       gridTemplateColumns: {
-        'settings-upload': '1fr 80px',
+        'settings-upload': '1fr 100px',
       },
       fontFamily: {
         sans: ['Roboto', ...defaultTheme.fontFamily.sans],
