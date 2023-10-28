@@ -29,12 +29,8 @@ jobs:
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
           git add build-number.txt
-
-          # Amend the previous commit
-          git commit --amend --no-edit
-
-          # Force push with lease
-          git push --force-with-lease
+          git commit -m "Increment build number"
+          git push
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
