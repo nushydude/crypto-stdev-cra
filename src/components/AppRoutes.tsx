@@ -1,6 +1,10 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { SingleTokenPage, BestBuyPage } from '../pages';
-import { Settingspage } from '../pages/SettingsPage/SettingsPage';
+import {
+  SingleTokenPage,
+  BestBuyPage,
+  SettingsPage,
+  LoginPage,
+} from '../pages';
 import { routes } from '../config/routes';
 
 export const AppRoutes = () => {
@@ -13,7 +17,8 @@ export const AppRoutes = () => {
         path={routes.BEST_BUY}
         render={() => <BestBuyPage sdMultiplier={2} />}
       />
-      <Route exact path={routes.SETTINGS} component={Settingspage} />
+      <Route exact path={routes.SETTINGS} component={SettingsPage} />
+      <Route exact path={routes.LOGIN} component={LoginPage} />
       {/* Default route */}
       <Redirect to={routes.BEST_DCA} />
     </Switch>

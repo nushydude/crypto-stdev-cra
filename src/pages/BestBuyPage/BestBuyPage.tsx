@@ -15,7 +15,7 @@ interface Props {
   sdMultiplier?: number;
 }
 
-export const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
+const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
   const [settings] = useLocalStorage(
     'settings',
     JSON.stringify(DEFAULT_SETTINGS),
@@ -62,3 +62,5 @@ export const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
     </div>
   );
 };
+
+export default BestBuyPage;

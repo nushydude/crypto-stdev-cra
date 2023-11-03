@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { CurrentSettings } from './CurrentSettings';
-import { SettingsJsonUri } from './SettingJsonUri';
+import { useState } from 'react';
+import CurrentSettings from './CurrentSettings';
+import SettingsJsonUri from './SettingJsonUri';
 
-export const Settingspage: React.FC = () => {
+const Settingspage = () => {
   // This is a hack.
   // Whenever the settings are updated, SettingsJsonUri calls onUpdate prop.
   // which increments value. Setting it on key of CurrentSettings make it
@@ -24,3 +24,5 @@ export const Settingspage: React.FC = () => {
     </>
   );
 };
+
+export default Settingspage;

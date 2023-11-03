@@ -15,7 +15,7 @@ type FieldValues = {
   limit: number;
 };
 
-export const SingleTokenPage = () => {
+const SingleTokenPage = () => {
   const history = useHistory();
   const location = useLocation();
 
@@ -64,3 +64,5 @@ export const SingleTokenPage = () => {
     </div>
   );
 };
+
+export default SingleTokenPage;

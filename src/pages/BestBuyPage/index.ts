@@ -1,1 +1,3 @@
-export { BestBuyPage } from './BestBuyPage';
+import BestBuyPage from './BestBuyPage';
+
+export default BestBuyPage;

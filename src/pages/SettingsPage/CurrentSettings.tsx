@@ -1,10 +1,9 @@
-import React from 'react';
 import { useLocalStorage } from 'react-use';
 import { JsonViewer } from '@textea/json-viewer';
 import { MdFileDownload } from 'react-icons/md';
 import { DEFAULT_SETTINGS } from '../../consts/DefaultSettings';
 
-export const CurrentSettings: React.FC = () => {
+const CurrentSettings = () => {
   const [settings] = useLocalStorage(
     'settings',
     JSON.stringify(DEFAULT_SETTINGS),
@@ -44,3 +43,5 @@ export const CurrentSettings: React.FC = () => {
     </div>
   );
 };
+
+export default CurrentSettings;

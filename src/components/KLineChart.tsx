@@ -1,4 +1,3 @@
-import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { format } from 'date-fns';
 
@@ -11,7 +10,7 @@ type Props = {
   }>;
 };
 
-export const KLineChart: React.FC<Props> = ({ data, variant = 'detailed' }) => {
+export const KLineChart = ({ data, variant = 'detailed' }: Props) => {
   const labels = data.map((d) => format(new Date(d.openTime), 'MMM d kk:mm'));
   const priceSet = data.map((d) => d.openPrice);
 
