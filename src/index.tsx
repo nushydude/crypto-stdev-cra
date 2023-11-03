@@ -7,6 +7,7 @@ import { App } from './App';
 // import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { AppSettingsProvider } from './providers/AppSettingsProvider';
+import UserProvider from './providers/UserProvider';
 
 ChartJS.register(...registerables);
 
@@ -17,7 +18,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <AppSettingsProvider>
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </AppSettingsProvider>
   </React.StrictMode>,
 );
