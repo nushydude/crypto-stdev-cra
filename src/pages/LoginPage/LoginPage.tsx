@@ -1,7 +1,11 @@
+import { useContext } from 'react';
 import LoginForm, { FieldValues } from '../../components/LoginForm';
 import { config } from '../../config';
+import { UserContext } from '../../context/user';
 
 const LoginPage = () => {
+  const { login } = useContext(UserContext);
+
   const onSubmit = (fieldValues: FieldValues) =>
     fetch(`${config.API_URI}/api/auth/login`, {
       method: 'POST',
@@ -11,8 +15,9 @@ const LoginPage = () => {
       body: JSON.stringify(fieldValues),
     })
       .then((response) => response.json())
-      // TODO: store tokens in React context and persist in local storage
-      .then((data) => console.log(data));
+      .then(({ accessToken, refreshToken }) =>
+        login(refreshToken, accessToken),
+      );
 
   return (
     <div className="w-full sm:w-80 sm:pt-40 mx-auto flex justify-center items-center ">
