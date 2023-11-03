@@ -31,7 +31,7 @@ export const TokenOptionsForm = ({
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((data) => onSubmit(data))}
       data-testid="form-symbol-interval-limit"
       className="grid gap-2 grid-cols-1 mb-4"
     >

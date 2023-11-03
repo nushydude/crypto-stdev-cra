@@ -26,7 +26,7 @@ const LoginForm = ({ onSubmit }: Props) => {
       <h1 className="text-center text-xl font-bold mb-4">Log in</h1>
       <div className="w-32 mx-auto mb-4 h-px bg-gray-300" />
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit((data) => onSubmit(data))}
         data-testid="form-login"
         className="grid gap-2 grid-cols-1 "
       >
@@ -39,12 +39,9 @@ const LoginForm = ({ onSubmit }: Props) => {
             id="email"
             type="email"
             className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            {...register('email', { required: true })}
+            {...register('email', { required: 'Email is required' })}
           />
-
-          {errors.email && (
-            <p className="text-red-400 text-sm">This field is required</p>
-          )}
+          <p className="text-red-400 text-sm">{errors.email?.message}</p>
         </div>
 
         <div className="w-full mb-2 md:mb-4">
@@ -56,11 +53,11 @@ const LoginForm = ({ onSubmit }: Props) => {
             id="password"
             type="password"
             className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            {...register('password', { required: true })}
+            {...register('password', {
+              required: 'Password is required',
+            })}
           />
-          {errors.password && (
-            <p className="text-red-400 text-sm">This field is required</p>
-          )}
+          <p className="text-red-400 text-sm">{errors.password?.message}</p>
         </div>
 
         <button

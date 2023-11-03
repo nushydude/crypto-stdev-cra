@@ -4,6 +4,7 @@ import {
   BestBuyPage,
   SettingsPage,
   LoginPage,
+  SignupPage,
 } from '../pages';
 import { routes } from '../config/routes';
 
@@ -19,6 +20,8 @@ export const AppRoutes = () => {
       />
       <Route exact path={routes.SETTINGS} component={SettingsPage} />
       <Route exact path={routes.LOGIN} component={LoginPage} />
+      <Route exact path={routes.SIGNUP} component={SignupPage} />
+
       {/* Default route */}
       <Redirect to={routes.BEST_DCA} />
     </Switch>
