@@ -35,7 +35,7 @@ const SignupForm = ({ onSubmit }: Props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FieldValues>({
     defaultValues: {
       email: '',
@@ -50,14 +50,15 @@ const SignupForm = ({ onSubmit }: Props) => {
       <h1 className="text-center text-xl font-bold mb-4">Sign up</h1>
       <div className="w-32 mx-auto mb-4 h-px bg-gray-300" />
       <form
-        onSubmit={handleSubmit((data) =>
-          onSubmit({
-            firstname: data.firstname.trim(),
-            lastname: data.lastname.trim(),
-            email: data.email.trim(),
-            // intentionally not trimmed
-            password: data.password,
-          }),
+        onSubmit={handleSubmit(
+          async (data) =>
+            await onSubmit({
+              firstname: data.firstname.trim(),
+              lastname: data.lastname.trim(),
+              email: data.email.trim(),
+              // intentionally not trimmed
+              password: data.password,
+            }),
         )}
         data-testid="form-signup"
         className="grid gap-2 grid-cols-1 "
@@ -156,7 +157,8 @@ const SignupForm = ({ onSubmit }: Props) => {
         <button
           data-testid="submit-button"
           type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          disabled={isSubmitting}
+          className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Submit
         </button>
