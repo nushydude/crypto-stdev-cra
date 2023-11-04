@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useClickAway, useMedia } from 'react-use';
 import {
@@ -7,6 +7,9 @@ import {
   MiddleBar,
   TopBar,
 } from './HamburgerMenu.styles';
+import { routes } from '../config/routes';
+import { UserContext } from '../context/user';
+import Version from './Version';
 
 type Props = {
   links: Array<{ to: string; label: string; icon: string }>;
@@ -17,6 +20,8 @@ export const HamburgerMenu = ({ headerHeight, links }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const [menuVisible, setMenuVisible] = useState(false);
   const isMobile = useMedia('(max-width: 640px)');
+  const { isLoggedIn, removeUser } = useContext(UserContext);
+
   useClickAway(ref, () => {
     setMenuVisible(false);
   });
@@ -41,7 +46,7 @@ export const HamburgerMenu = ({ headerHeight, links }: Props) => {
 
       <MenuContainer menuVisible={menuVisible} offsetTop={headerHeight}>
         {links.map(({ to, label, icon }, idx) => (
-          <Link key={idx} to={to}>
+          <Link key={idx} to={to} className="no-underline">
             <div
               className="w-full p-4 border-b-2 border-solid border-gray-300 hover:bg-gray-700 hover:text-white"
               onClick={() => setMenuVisible(false)}
@@ -50,6 +55,51 @@ export const HamburgerMenu = ({ headerHeight, links }: Props) => {
             </div>
           </Link>
         ))}
+
+        {!isLoggedIn ? (
+          <div className="p-4 text-center flex justify-evenly gap-2">
+            <Link
+              className="w-full no-underline visited:text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded"
+              to={routes.LOGIN}
+              onClick={(e) => {
+                e.stopPropagation();
+                setMenuVisible(false);
+              }}
+            >
+              <span className="text-white font-bold">Log in</span>
+            </Link>
+
+            <Link
+              className="w-full no-underline bg-white py-2 px-4 rounded"
+              to={routes.SIGNUP}
+              onClick={(e) => {
+                e.stopPropagation();
+                setMenuVisible(false);
+              }}
+            >
+              <span className="text-blue-500 hover:text-blue-700 font-bold">
+                Sign up
+              </span>
+            </Link>
+          </div>
+        ) : (
+          <div className="p-4">
+            <button
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={(e) => {
+                e.stopPropagation();
+                removeUser();
+                setMenuVisible(false);
+              }}
+            >
+              Logout
+            </button>
+          </div>
+        )}
+
+        <div className="text-center">
+          <Version />
+        </div>
       </MenuContainer>
     </div>
   );

@@ -1,10 +1,14 @@
 import { useContext } from 'react';
 import LoginForm, { FieldValues } from '../../components/LoginForm';
 import { config } from '../../config';
+import { routes } from '../../config/routes';
+import useRedirectOnLogin from '../../hooks/useRedirectOnLogin';
 import { UserContext } from '../../context/user';
 
 const LoginPage = () => {
   const { login } = useContext(UserContext);
+
+  useRedirectOnLogin(routes.BEST_DCA);
 
   const onSubmit = (fieldValues: FieldValues) =>
     fetch(`${config.API_URI}/api/auth/login`, {
