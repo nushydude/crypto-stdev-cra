@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import { useMeasure } from 'react-use';
-import { config } from '../config';
 import { routes } from '../config/routes';
 import { HamburgerMenu } from './HamburgerMenu';
 import { PageTitle } from './PageTitle';
+import Version from './Version';
 
 const links = [
   { to: routes.SINGLE, label: 'Single Token', icon: '📈' },
@@ -45,7 +45,7 @@ export const Header = () => {
           <PageTitle />
         </div>
 
-        <span className="inline-block">build {config.BUILD_NUMBER}</span>
+        <Version />
       </div>
     </div>
   );

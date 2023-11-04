@@ -5,4 +5,6 @@ export const routes = {
   SETTINGS: '/settings',
   LOGIN: '/login',
   SIGNUP: '/signup',
+  // ----
+  PLAYGROUND: '/playground',
 };
