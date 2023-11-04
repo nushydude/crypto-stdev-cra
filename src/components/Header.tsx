@@ -15,11 +15,8 @@ const links = [
 ];
 
 export const Header = () => {
-  const [ref, { x, y, width, height, top, right, bottom, left }] =
-    useMeasure<HTMLDivElement>();
+  const [ref, { height }] = useMeasure<HTMLDivElement>();
   const { removeUser, isLoggedIn } = useContext(UserContext);
-
-  console.log('headerHeight', x, y, width, height, top, right, bottom, left);
 
   return (
     <div
