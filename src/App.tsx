@@ -18,7 +18,7 @@ export const App = () => {
 
       <Header />
 
-      <div className="w-100 max-w-7xl mx-auto px-2 flex flex-col flex-grow pt-18 sm:pt-12">
+      <div className="w-100 max-w-7xl mx-auto px-2 flex flex-col flex-grow pt-16 sm:pt-14">
         <AppRoutes />
       </div>
 
