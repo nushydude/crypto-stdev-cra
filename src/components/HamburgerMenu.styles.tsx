@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Bar = styled.div<{ menuVisible?: boolean }>`
+const Bar = styled.div<{ menuVisible?: boolean }>`
   height: 4px;
   background-color: white;
   width: 24px;
@@ -33,16 +33,12 @@ export const MenuContainer = styled.div<{
   background-color: black;
   width: 100vw;
   top: ${({ offsetTop }) => offsetTop}px;
-  left: -20px;
+  left: -1rem;
   height: ${({ menuVisible, offsetTop }) =>
     menuVisible ? `calc(100vh - ${offsetTop}px)` : 0};
   transition: all 0.3s ease-in-out;
   overflow: hidden;
   z-index: 999;
-
-  @media (max-width: 640px) {
-    padding-top: 20px;
-  }
 
   a:link {
     text-decoration: none;
