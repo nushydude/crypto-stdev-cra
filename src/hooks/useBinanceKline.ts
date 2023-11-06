@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FETCH_STATUS } from '../consts/FetchStatus';
 import { FetchStatus } from '../types/fetchStatus';
 import { Interval } from '../types/interval';
@@ -43,9 +43,10 @@ export const useBinanceKLine = (
     }
   };
 
-  const refetch = async (configs: Array<Config>) => {
-    fetchKLineDataForAllConfigs(configs);
-  };
+  const refetch = useCallback(
+    (configs: Array<Config>) => fetchKLineDataForAllConfigs(configs),
+    [],
+  );
 
   useEffect(
     () => {

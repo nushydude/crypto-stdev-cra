@@ -1,14 +1,15 @@
-import { useLocalStorage } from 'react-use';
 import { DCAInfo } from '../../components/DCAInfo';
 import { useBinanceKLine } from '../../hooks/useBinanceKline';
 import { FETCH_STATUS } from '../../consts/FetchStatus';
-import { DEFAULT_SETTINGS } from '../../consts/DefaultSettings';
 import { KLineChart } from '../../components/KLineChart';
 import { Skeleton } from './Skeleton';
 import { getKLineConfigs } from './getKLineConfigs';
 import { getTransformedKLineDataSortedByDipMemoized } from './getTransformedKLineDataSortedByDip';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { BestBuyItem } from './BestBuyItem';
+import WatchPairsDropdown from '../../containers/WatchPairsDropdown';
+import { AppSettingsContext } from '../../context/appSettings';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 interface Props {
   // Best Buy and Best DCA are separated by a multiplier.
@@ -16,21 +17,18 @@ interface Props {
 }
 
 const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
-  const [settings] = useLocalStorage(
-    'settings',
-    JSON.stringify(DEFAULT_SETTINGS),
-  );
+  const { settings } = useContext(AppSettingsContext);
 
   const klineFetchConfigs = useMemo(
-    () => getKLineConfigs(settings),
+    () => getKLineConfigs(settings.bestBuySymbols),
     [settings],
   );
 
-  const { data, fetchStatus } = useBinanceKLine(klineFetchConfigs);
+  const { data, fetchStatus, refetch } = useBinanceKLine(klineFetchConfigs);
 
-  if (fetchStatus === FETCH_STATUS.fetching) {
-    return <Skeleton rows={klineFetchConfigs.length} />;
-  }
+  useDeepCompareEffect(() => {
+    refetch(klineFetchConfigs);
+  }, [klineFetchConfigs, refetch]);
 
   const sortedByLargestDip = getTransformedKLineDataSortedByDipMemoized(
     data,
@@ -42,6 +40,13 @@ const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
 
   return (
     <div>
+      <WatchPairsDropdown />
+
+      {fetchStatus === FETCH_STATUS.fetching &&
+        sortedByLargestDip.length === 0 && (
+          <Skeleton rows={klineFetchConfigs.length} />
+        )}
+
       {sortedByLargestDip.map((dataItem, index) => (
         <BestBuyItem
           key={dataItem.symbol}
