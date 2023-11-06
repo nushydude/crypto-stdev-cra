@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   AppSettingsContext,
   AppSettingsContextType,
+  AppSettings,
 } from '../context/appSettings';
 import { FeatureEnum } from '../types/features';
 import { getCookieValue } from '../utils/getCookieValue';
+import { useLocalStorage } from 'react-use';
+import { DEFAULT_SETTINGS } from '../consts/DefaultSettings';
 
-const INITIAL_STATE: AppSettingsContextType = {
+const DEFAULT_APP_SETTINGS = {
+  ...DEFAULT_SETTINGS,
   features: {
     [FeatureEnum.BOTTOM_MOUNTED_NAV_ON_MOBILE]: false,
   },
@@ -16,25 +20,62 @@ type Props = {
   children: React.ReactNode;
 };
 
-function hydrateInitialStateWithFeaturesFromCookies() {
-  const initialState = { ...INITIAL_STATE };
+function hydrateInitialStateWithFeaturesFromCookies(
+  initialSettings: AppSettings,
+) {
+  const nextSettings = { ...initialSettings };
 
-  for (const feature in initialState.features) {
+  for (const feature in nextSettings.features) {
     const cookieValue = getCookieValue(`FT_${feature}`);
 
     if (cookieValue !== null) {
-      initialState.features[feature as FeatureEnum] = cookieValue === 'true';
+      nextSettings.features[feature as FeatureEnum] = cookieValue === 'true';
     }
   }
 
-  return initialState;
+  return nextSettings;
+}
+
+function getInitialSettings(storedSettings: any) {
+  const storedSettingsObj = storedSettings
+    ? JSON.parse(storedSettings)
+    : DEFAULT_SETTINGS;
+
+  // TODO: perform deep merge
+  return {
+    ...DEFAULT_APP_SETTINGS,
+    ...storedSettingsObj,
+  };
 }
 
 // These settings are not user configurable, so we should not to persist them to localStorage.
 export const AppSettingsProvider = ({ children }: Props) => {
+  const [storedSettings, storeSettings] = useLocalStorage(
+    'settings',
+    JSON.stringify(DEFAULT_SETTINGS),
+  );
+
+  const [setting, setSettings] = useState<AppSettings>(
+    getInitialSettings(storedSettings),
+  );
+
+  const updateSettings = useCallback(
+    (newSettings: any) => {
+      const { features, ...rest } = newSettings;
+
+      setSettings(newSettings);
+
+      storeSettings(JSON.stringify(rest));
+    },
+    [storeSettings],
+  );
+
   return (
     <AppSettingsContext.Provider
-      value={hydrateInitialStateWithFeaturesFromCookies()}
+      value={{
+        settings: hydrateInitialStateWithFeaturesFromCookies(setting),
+        updateSettings,
+      }}
     >
       {children}
     </AppSettingsContext.Provider>
