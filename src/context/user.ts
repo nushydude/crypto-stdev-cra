@@ -1,5 +1,12 @@
 import React from 'react';
 
+export type Profile = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  settings: Record<string, any> | null;
+};
+
 export type UserContextType = {
   fetchAccessToken: () => any;
   isLoggedIn: boolean;
@@ -9,6 +16,8 @@ export type UserContextType = {
   setRefreshToken: (refreshToken: string) => void;
   accessToken?: string | null;
   refreshToken?: string | null;
+  profile: Profile | null;
+  fetchProfile: () => Promise<Profile | null>;
 };
 
 export const UserContext = React.createContext<UserContextType>({
@@ -20,4 +29,6 @@ export const UserContext = React.createContext<UserContextType>({
   setRefreshToken: () => {},
   accessToken: null,
   refreshToken: null,
+  profile: null,
+  fetchProfile: () => Promise.resolve(null),
 });

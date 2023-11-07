@@ -24,41 +24,46 @@ const usePersistedState = (
     }
   }, [stateKey, state, hasMounted]);
 
-  useEffect(() => {
-    const loadPersistedState = () => {
-      try {
-        const persistedState = localStorage.getItem(stateKey);
+  useEffect(
+    () => {
+      const loadPersistedState = () => {
+        try {
+          const persistedState = localStorage.getItem(stateKey);
 
-        if (persistedState) {
-          const parsedState = JSON.parse(persistedState);
+          if (persistedState) {
+            const parsedState = JSON.parse(persistedState);
 
-          // Filter out any fields from parsedState that are not present in initialState,
-          // in case we want to clean up the staled states in the future.
-          const filteredState = Object.keys(initialState).reduce(
-            (result, key) => {
-              if (parsedState[key]) {
-                return {
-                  ...result,
-                  [key]: parsedState[key],
-                };
-              }
+            // Filter out any fields from parsedState that are not present in initialState,
+            // in case we want to clean up the staled states in the future.
+            const filteredState = Object.keys(initialState).reduce(
+              (result, key) => {
+                if (parsedState[key]) {
+                  return {
+                    ...result,
+                    [key]: parsedState[key],
+                  };
+                }
 
-              return result;
-            },
-            initialState,
-          );
+                return result;
+              },
+              initialState,
+            );
 
-          setState(filteredState);
+            setState(filteredState);
+          }
+        } catch (error) {
+          // Ignore
+        } finally {
+          setHasMounted(true);
         }
-      } catch (error) {
-        // Ignore
-      } finally {
-        setHasMounted(true);
-      }
-    };
+      };
 
-    loadPersistedState();
-  }, []);
+      loadPersistedState();
+    },
+    // Only run this effect once, when the component mounts.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return hasMounted;
 };

@@ -1,13 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import {
-  AppSettingsContext,
-  AppSettingsContextType,
-  AppSettings,
-} from '../context/appSettings';
+import { AppSettingsContext, AppSettings } from '../context/appSettings';
 import { FeatureEnum } from '../types/features';
 import { getCookieValue } from '../utils/getCookieValue';
 import { useLocalStorage } from 'react-use';
 import { DEFAULT_SETTINGS } from '../consts/DefaultSettings';
+import { deepMergeSerializableObjects } from '../utils/deepMergeSerializableObjects';
 
 const DEFAULT_APP_SETTINGS = {
   ...DEFAULT_SETTINGS,
@@ -41,11 +38,10 @@ function getInitialSettings(storedSettings: any) {
     ? JSON.parse(storedSettings)
     : DEFAULT_SETTINGS;
 
-  // TODO: perform deep merge
-  return {
-    ...DEFAULT_APP_SETTINGS,
-    ...storedSettingsObj,
-  };
+  return deepMergeSerializableObjects(
+    DEFAULT_APP_SETTINGS,
+    storedSettingsObj,
+  ) as AppSettings;
 }
 
 // These settings are not user configurable, so we should not to persist them to localStorage.
