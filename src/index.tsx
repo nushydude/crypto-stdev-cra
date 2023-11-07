@@ -17,11 +17,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <AppSettingsProvider>
-      <UserProvider>
+    <UserProvider>
+      <AppSettingsProvider>
         <App />
-      </UserProvider>
-    </AppSettingsProvider>
+      </AppSettingsProvider>
+    </UserProvider>
   </React.StrictMode>,
 );
 

@@ -1,13 +1,16 @@
-import { useCallback, useState } from 'react';
-import { UserContext } from '../context/user';
+import { useCallback, useEffect, useState } from 'react';
+import { Profile, UserContext } from '../context/user';
 import usePersistedState from '../hooks/usePersistedState';
 import { config } from '../config';
+import { fetchWithToken } from '../utils/fetchWithToken';
+import { fetchAccessTokenUsingRefreshToken } from '../utils/fetchAccessTokenUsingRefreshToken';
 
 const STATE_KEY = 'user-state';
 
 const INITIAL_STATE = {
   accessToken: null,
   refreshToken: null,
+  profile: null,
 };
 
 type Props = {
@@ -17,6 +20,7 @@ type Props = {
 const UserProvider = ({ children }: Props) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
 
   const hasMounted = usePersistedState(
     STATE_KEY,
@@ -31,36 +35,74 @@ const UserProvider = ({ children }: Props) => {
   const removeUser = useCallback(() => {
     setAccessToken(null);
     setRefreshToken(null);
+    setProfile(null);
   }, []);
 
-  const login = useCallback((refreshToken: string, accessToken: string) => {
-    setAccessToken(accessToken);
-    setRefreshToken(refreshToken);
-  }, []);
+  const fetchAccessToken = useCallback(
+    () =>
+      fetchAccessTokenUsingRefreshToken(refreshToken)
+        .then((accessToken) => {
+          setAccessToken(accessToken);
+          return accessToken;
+        })
+        .catch((error) => {
+          console.log(error);
+          removeUser();
+        }),
+    [setAccessToken, refreshToken, removeUser],
+  );
 
-  const isLoggedIn = !!refreshToken;
-
-  const fetchAccessToken = useCallback(() => {
-    if (!refreshToken) {
-      return Promise.reject('No refresh token available');
+  const fetchProfile = useCallback(() => {
+    if (!accessToken) {
+      return Promise.resolve(null);
     }
 
-    return fetch(`${config.API_URI}/api/auth/refresh`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refreshToken }),
+    return fetchWithToken({
+      url: `${config.API_URI}/api/auth/profile`,
+      accessToken,
+      options: {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+      refreshAccessToken: fetchAccessToken,
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.accessToken) {
-          setAccessToken(data.accessToken);
+        if (data.profile) {
+          setProfile(data.profile);
 
-          return data.accessToken;
+          return data.profile as Profile;
         } else {
-          return Promise.reject('No access token available');
+          removeUser();
+          return null;
         }
+      })
+      .catch((error) => {
+        console.log(error);
+        // detect 401 error and retry
+        return null;
       });
-  }, [setAccessToken, refreshToken]);
+  }, [accessToken, fetchAccessToken, removeUser]);
+
+  const login = useCallback(
+    (refreshToken: string, accessToken: string) => {
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+      fetchProfile();
+    },
+    [fetchProfile],
+  );
+
+  useEffect(() => {
+    if (refreshToken) {
+      fetchProfile();
+    } else {
+      removeUser();
+    }
+  }, [refreshToken, fetchProfile, removeUser]);
 
   if (!hasMounted) {
     return null;
@@ -69,12 +111,14 @@ const UserProvider = ({ children }: Props) => {
   const value = {
     accessToken,
     fetchAccessToken,
-    isLoggedIn,
+    isLoggedIn: !!refreshToken,
     login,
     refreshToken,
     removeUser,
     setAccessToken,
     setRefreshToken,
+    profile,
+    fetchProfile,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
