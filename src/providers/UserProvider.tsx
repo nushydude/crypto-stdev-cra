@@ -70,11 +70,11 @@ const UserProvider = ({ children }: Props) => {
       refreshAccessToken: fetchAccessToken,
     })
       .then((response) => response.json())
-      .then((data) => {
-        if (data.profile) {
-          setProfile(data.profile);
+      .then((profile) => {
+        if (profile) {
+          setProfile(profile);
 
-          return data.profile as Profile;
+          return profile as Profile;
         } else {
           removeUser();
           return null;
@@ -99,8 +99,6 @@ const UserProvider = ({ children }: Props) => {
   useEffect(() => {
     if (refreshToken) {
       fetchProfile();
-    } else {
-      removeUser();
     }
   }, [refreshToken, fetchProfile, removeUser]);
 
@@ -120,6 +118,8 @@ const UserProvider = ({ children }: Props) => {
     profile,
     fetchProfile,
   };
+
+  console.log('value:', value);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
