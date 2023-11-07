@@ -55,13 +55,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
       - name: Deploy to Vercel Preview
+        id: deploy
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/[^a-zA-Z0-9]/-/g')
-          echo "Deploying to preview environment for branch: $BRANCH_NAME"
-          vercel --token=$VERCEL_TOKEN --confirm --name "crypto-stdev-cra-$BRANCH_NAME" --alias "$BRANCH_NAME.crypto-stdev-cra.vercel.app"
+          DEPLOYMENT_URL=$(vercel --token=$VERCEL_TOKEN --scope my-vercel-team --confirm --name "my-app-$BRANCH_NAME" | tail -n 1)
+          echo "Deployment URL: $DEPLOYMENT_URL"
+          echo "::set-output name=preview_url::$DEPLOYMENT_URL"
+
+      - name: Alias Deployment
+        if: steps.deploy.outputs.preview_url
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/[^a-zA-Z0-9]/-/g')
+          ALIAS_URL="crypto-stdev-${BRANCH_NAME}.nushydude.vercel.app"
+          vercel alias set ${{ steps.deploy.outputs.preview_url }} $ALIAS_URL --token=$VERCEL_TOKEN
+          echo "Preview deployment is aliased to $ALIAS_URL"
