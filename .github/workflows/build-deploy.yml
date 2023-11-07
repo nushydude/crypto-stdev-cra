@@ -8,10 +8,12 @@ on:
   push:
     branches:
       - main
+      - '*' # This wildcard matches all branches except 'main' due to the job-level 'if' conditions
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout code
@@ -45,3 +47,21 @@ jobs:
 
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+  build-preview:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Deploy to Vercel Preview
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/[^a-zA-Z0-9]/-/g')
+          echo "Deploying to preview environment for branch: $BRANCH_NAME"
+          vercel --token=$VERCEL_TOKEN --confirm --name "crypto-stdev-cra-$BRANCH_NAME" --alias "$BRANCH_NAME.crypto-stdev-cra.vercel.app"
