@@ -6,6 +6,7 @@ import { PageTitle } from './PageTitle';
 import Version from './Version';
 import { useContext } from 'react';
 import { UserContext } from '../context/user';
+import ProfileLink from './ProfileLink';
 
 const links = [
   { to: routes.SINGLE, label: 'Single Token', icon: '📈' },
@@ -69,14 +70,17 @@ export const Header = () => {
               </Link>
             </>
           ) : (
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded"
-              onClick={() => {
-                removeUser();
-              }}
-            >
-              Logout
-            </button>
+            <>
+              <ProfileLink size={28} />
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-1 rounded ml-4"
+                onClick={() => {
+                  removeUser();
+                }}
+              >
+                Logout
+              </button>
+            </>
           )}
         </div>
         {/* <Version /> */}

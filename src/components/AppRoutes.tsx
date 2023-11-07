@@ -8,6 +8,7 @@ import {
   SignupPage,
 } from '../pages';
 import { routes } from '../config/routes';
+import ProfilePage from '../pages/ProfilePage';
 
 const PlaygroundPage = lazy(() => import('../pages/PlaygroundPage'));
 
@@ -25,6 +26,7 @@ export const AppRoutes = () => {
         <Route exact path={routes.SETTINGS} component={SettingsPage} />
         <Route exact path={routes.LOGIN} component={LoginPage} />
         <Route exact path={routes.SIGNUP} component={SignupPage} />
+        <Route exact path={routes.PROFILE} component={ProfilePage} />
 
         <Route exact path={routes.PLAYGROUND} component={PlaygroundPage} />
 
