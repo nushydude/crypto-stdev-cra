@@ -44,7 +44,7 @@ export const Header = () => {
           className="w-full flex justify-between align-middle md:hidden"
           style={{ alignItems: 'center' }}
         >
-          <HamburgerMenu links={links} headerHeight={height + 16} />
+          <HamburgerMenu links={links} headerHeight={height} />
           <PageTitle />
           {isLoggedIn ? <ProfileLink /> : <span />}
         </div>
