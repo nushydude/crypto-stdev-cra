@@ -23,10 +23,10 @@ export const Header = () => {
     <div
       data-testid="header"
       ref={ref}
-      className="w-full px-2 bg-black text-white mb-2 fixed h-14 top-0 left-0 right-0 z-10 shadow-sm pt-4 pb-4 sm:h-12 sm:pt-2 sm:pb-2"
+      className="w-full px-2 bg-black text-white mb-2 fixed h-14 top-0 left-0 right-0 z-10 shadow-sm  md:h-12 py-2 md:pt-2 md:pb-4"
     >
       <div className="max-w-7xl mx-auto px-2 flex justify-between align-middle">
-        <div className="hidden sm:flex sm:items-center">
+        <div className="hidden md:flex md:items-center">
           {links.map(({ to, label, icon }, idx) => (
             <NavLink
               className="mr-8 text-white hover:text-gray-300"
@@ -41,13 +41,15 @@ export const Header = () => {
 
         <div
           data-testid="mobile-container"
-          className="flex align-middle sm:hidden"
+          className="w-full flex justify-between align-middle md:hidden"
+          style={{ alignItems: 'center' }}
         >
           <HamburgerMenu links={links} headerHeight={height + 16} />
           <PageTitle />
+          {isLoggedIn ? <ProfileLink /> : <span />}
         </div>
 
-        <div className="hidden sm:flex sm:items-center">
+        <div className="hidden md:flex md:items-center">
           <div className="mr-4">
             <Version />
           </div>

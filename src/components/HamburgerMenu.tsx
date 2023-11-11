@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useClickAway, useMedia } from 'react-use';
-import { MdAccountCircle } from 'react-icons/md';
 import {
   BottomBar,
   MenuContainer,
@@ -11,7 +10,6 @@ import {
 import { routes } from '../config/routes';
 import { UserContext } from '../context/user';
 import Version from './Version';
-import ProfileLink from './ProfileLink';
 
 type Props = {
   links: Array<{ to: string; label: string; icon: string }>;
@@ -86,7 +84,6 @@ export const HamburgerMenu = ({ headerHeight, links }: Props) => {
           </div>
         ) : (
           <div className="flex items-center justify-betweem p-4">
-            <ProfileLink onClick={() => setMenuVisible(false)} />
             <button
               className="w-full ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               onClick={(e) => {

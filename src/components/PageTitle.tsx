@@ -6,14 +6,15 @@ const pageTitles = {
   [routes.BEST_DCA]: 'Best DCA',
   [routes.SETTINGS]: 'Settings',
   [routes.SINGLE]: 'Single token',
+  [routes.PROFILE]: 'Profile',
 };
 
 export const PageTitle = () => {
   const location = useLocation();
 
   return (
-    <span className="text-white inline-block ml-5 font-bold">
+    <h1 className="text-white inline-block font-bold">
       {pageTitles[location.pathname]}
-    </span>
+    </h1>
   );
 };
