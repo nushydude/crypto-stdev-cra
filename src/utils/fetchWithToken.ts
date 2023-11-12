@@ -5,6 +5,7 @@ interface FetchWithTokenParams {
   options: RequestInit;
   accessToken: string | null;
   refreshAccessToken: () => Promise<string>;
+  setAccessToken?: (accessToken: string) => void;
 }
 
 export const fetchWithToken = async ({
@@ -12,6 +13,7 @@ export const fetchWithToken = async ({
   options,
   accessToken,
   refreshAccessToken,
+  setAccessToken,
 }: FetchWithTokenParams) => {
   let newAccessToken = accessToken;
 
@@ -32,6 +34,10 @@ export const fetchWithToken = async ({
   if (response.status === 401) {
     // If the response is 401 Unauthorized, refresh the access token and try again.
     newAccessToken = await refreshAccessToken();
+
+    if (setAccessToken) {
+      setAccessToken(newAccessToken);
+    }
 
     const headers = {
       ...options.headers,

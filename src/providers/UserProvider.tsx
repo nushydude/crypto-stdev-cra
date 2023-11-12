@@ -68,6 +68,7 @@ const UserProvider = ({ children }: Props) => {
         },
       },
       refreshAccessToken: fetchAccessToken,
+      setAccessToken,
     })
       .then((response) => response.json())
       .then((profile) => {
@@ -118,8 +119,6 @@ const UserProvider = ({ children }: Props) => {
     profile,
     fetchProfile,
   };
-
-  console.log('value:', value);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
