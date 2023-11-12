@@ -5,11 +5,11 @@ import { KLineChart } from '../../components/KLineChart';
 import { Skeleton } from './Skeleton';
 import { getKLineConfigs } from './getKLineConfigs';
 import { getTransformedKLineDataSortedByDipMemoized } from './getTransformedKLineDataSortedByDip';
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import { BestBuyItem } from './BestBuyItem';
 import WatchPairsDropdown from '../../containers/WatchPairsDropdown';
-import { AppSettingsContext } from '../../context/appSettings';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import useWatchPairs from '../../hooks/useWatchPairs';
 
 interface Props {
   // Best Buy and Best DCA are separated by a multiplier.
@@ -17,11 +17,11 @@ interface Props {
 }
 
 const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
-  const { settings } = useContext(AppSettingsContext);
+  const { watchPairs, updateWatchPairs } = useWatchPairs();
 
   const klineFetchConfigs = useMemo(
-    () => getKLineConfigs(settings.bestBuySymbols),
-    [settings],
+    () => getKLineConfigs(watchPairs),
+    [watchPairs],
   );
 
   const { data, fetchStatus, refetch } = useBinanceKLine(klineFetchConfigs);
@@ -40,7 +40,10 @@ const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
 
   return (
     <div>
-      <WatchPairsDropdown />
+      <WatchPairsDropdown
+        watchPairs={watchPairs}
+        updateWatchPairs={updateWatchPairs}
+      />
 
       {fetchStatus === FETCH_STATUS.fetching &&
         sortedByLargestDip.length === 0 && (

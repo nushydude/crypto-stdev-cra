@@ -1,27 +1,25 @@
-import { useContext } from 'react';
 import WatchPairsDropdownComponent from '../components/WatchPairsDropdown';
 import { useSymbols } from '../hooks/useSymbols';
-import { AppSettingsContext } from '../context/appSettings';
 
-const WatchPairsDropdown = () => {
+interface Props {
+  watchPairs: string[];
+  updateWatchPairs: (newWatchPairs: string[]) => void;
+}
+
+const WatchPairsDropdown = ({ watchPairs, updateWatchPairs }: Props) => {
   const { symbols } = useSymbols();
-  const { settings, updateSettings } = useContext(AppSettingsContext);
 
   const onCheckChanged = (symbol: string, checked: boolean) => {
-    const newSettings = {
-      ...settings,
-      bestBuySymbols: checked
-        ? [...settings.bestBuySymbols, symbol]
-        : settings.bestBuySymbols.filter((s: string) => s !== symbol),
-    };
-
-    updateSettings(newSettings);
+    const newWatchPairs = checked
+      ? [...watchPairs, symbol]
+      : watchPairs.filter((s: string) => s !== symbol);
+    updateWatchPairs(newWatchPairs);
   };
 
   return (
     <WatchPairsDropdownComponent
       items={symbols}
-      selectedItems={settings.bestBuySymbols}
+      selectedItems={watchPairs}
       onItemCheckChanged={onCheckChanged}
     />
   );
