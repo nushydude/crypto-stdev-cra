@@ -3,7 +3,7 @@ import { isTokenExpiringSoon } from './isTokenExpiringSoon';
 interface FetchWithTokenParams {
   url: string;
   options: RequestInit;
-  accessToken: string | null;
+  accessToken?: string | null;
   refreshAccessToken: () => Promise<string>;
   setAccessToken?: (accessToken: string) => void;
 }
@@ -17,9 +17,9 @@ export const fetchWithToken = async ({
 }: FetchWithTokenParams) => {
   let newAccessToken = accessToken;
 
-  // Check if the token is expiring soon.
+  // Check if there is no accessToken or if is expiring soon.
   // If it is, refresh the access token and set the new token.
-  if (accessToken && isTokenExpiringSoon(accessToken)) {
+  if (!accessToken || (accessToken && isTokenExpiringSoon(accessToken))) {
     newAccessToken = await refreshAccessToken();
   }
 

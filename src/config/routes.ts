@@ -5,7 +5,9 @@ export const routes = {
   SETTINGS: '/settings',
   LOGIN: '/login',
   SIGNUP: '/signup',
+  // ---- Authed
   PROFILE: '/profile',
+  PORTFOLIO: '/portfolio',
   // ----
   PLAYGROUND: '/playground',
 };

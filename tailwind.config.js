@@ -5,14 +5,17 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
-      spacing: {
-        18: '72px',
+      colors: {
+        'modal-backdrop': 'rgba(0, 0, 0, 0.65)',
+      },
+      fontFamily: {
+        sans: ['Roboto', ...defaultTheme.fontFamily.sans],
       },
       gridTemplateColumns: {
         'settings-upload': '1fr 100px',
       },
-      fontFamily: {
-        sans: ['Roboto', ...defaultTheme.fontFamily.sans],
+      spacing: {
+        18: '72px',
       },
     },
   },

@@ -13,6 +13,7 @@ const links = [
   { to: routes.BEST_DCA, label: 'Best DCA', icon: '🏆' },
   { to: routes.BEST_BUY, label: 'Best Buy', icon: '🏆' },
   { to: routes.SETTINGS, label: 'Settings', icon: '⚙️' },
+  { to: routes.PORTFOLIO, label: 'Portfolio', icon: '📊' },
 ];
 
 export const Header = () => {
