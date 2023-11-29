@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Chart as ChartJS, registerables } from 'chart.js';
 import 'react-toastify/dist/ReactToastify.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './index.css';
 import { App } from './App';
 // import * as serviceWorkerRegistration from './serviceWorkerRegistration';
@@ -11,17 +12,21 @@ import UserProvider from './providers/UserProvider';
 
 ChartJS.register(...registerables);
 
+const queryClient = new QueryClient();
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
 root.render(
   <React.StrictMode>
-    <UserProvider>
-      <AppSettingsProvider>
-        <App />
-      </AppSettingsProvider>
-    </UserProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <AppSettingsProvider>
+          <App />
+        </AppSettingsProvider>
+      </UserProvider>
+    </QueryClientProvider>
   </React.StrictMode>,
 );
 

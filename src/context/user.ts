@@ -14,11 +14,13 @@ export type UserContextType = {
   removeUser: () => void;
   setAccessToken: (accessToken: string) => void;
   setRefreshToken: (refreshToken: string) => void;
-  accessToken?: string | null;
-  refreshToken?: string | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   profile: Profile | null;
   fetchProfile: () => Promise<Profile | null>;
+  authedFetch: (url: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
 };
+
 
 export const UserContext = React.createContext<UserContextType>({
   fetchAccessToken: () => {},
@@ -31,4 +33,5 @@ export const UserContext = React.createContext<UserContextType>({
   refreshToken: null,
   profile: null,
   fetchProfile: () => Promise.resolve(null),
+  authedFetch: () => Promise.resolve(new Response()),
 });

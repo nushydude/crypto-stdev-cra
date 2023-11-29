@@ -1,21 +1,15 @@
-import { useEffect, useState } from 'react';
 import { DEFAULT_SYMBOLS } from '../consts/DefaultSymbols';
 import { fetchSymbols } from '../utils/fetchSymbols';
+import { useQuery } from '@tanstack/react-query';
 
 export const useSymbols = () => {
-  const [symbols, setSymbols] = useState<Array<string>>(DEFAULT_SYMBOLS);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading } = useQuery({
+    queryKey: ['symbols'],
+    queryFn: fetchSymbols,
+    staleTime: 1000 * 60 * 60
+  })
 
-  useEffect(
-    () => {
-      fetchSymbols()
-        .then(setSymbols)
-        .finally(() => setIsLoading(false));
-    },
-    // just need this to run on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  const symbols = data || DEFAULT_SYMBOLS;
 
   return { isLoading, symbols };
 };

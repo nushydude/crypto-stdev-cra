@@ -1,21 +1,17 @@
 import { config } from '../config';
-import { fetchWithToken } from './fetchWithToken';
 
 const fetchUserWatchPairs = async (
-  accessToken: string,
-  refreshAccessToken: () => Promise<string>,
+  fetchFn: (url: RequestInfo | URL, options: RequestInit) => Promise<Response>,
 ) => {
-  const response = await fetchWithToken({
-    url: `${config.API_URI}/api/watch_pairs`,
-    options: {
+  const response = await fetchFn(
+    `${config.API_URI}/api/watch_pairs`,
+    {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     },
-    accessToken,
-    refreshAccessToken,
-  });
+  );
 
   const watchPairs = await response.json();
 
