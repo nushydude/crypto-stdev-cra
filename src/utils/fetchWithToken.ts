@@ -1,8 +1,8 @@
 import { isTokenExpiringSoon } from './isTokenExpiringSoon';
 
 interface FetchWithTokenParams {
-  url: string;
-  options: RequestInit;
+  url: RequestInfo | URL;
+  options: RequestInit | undefined;
   accessToken: string | null;
   refreshAccessToken: () => Promise<string>;
   setAccessToken?: (accessToken: string) => void;
@@ -10,7 +10,7 @@ interface FetchWithTokenParams {
 
 export const fetchWithToken = async ({
   url,
-  options,
+  options = {},
   accessToken,
   refreshAccessToken,
   setAccessToken,

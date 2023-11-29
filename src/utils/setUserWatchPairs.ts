@@ -1,30 +1,23 @@
 import { config } from '../config';
-import { fetchWithToken } from './fetchWithToken';
 
 const setUserWatchPairs = async (
-  accessToken: string,
-  refreshAccessToken: () => Promise<string>,
-  setAccessToken: (accessToken: string) => void,
+  fetchFn: (url: RequestInfo | URL, options: RequestInit) => Promise<Response>,
   watchPairs: string[],
-) => {
-  const response = await fetchWithToken({
-    url: `${config.API_URI}/api/watch_pairs`,
-    options: {
+): Promise<Array<string>> => {
+  const response = await fetchFn(
+    `${config.API_URI}/api/watch_pairs`,
+    {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ watchPairs }),
     },
-    accessToken,
-    refreshAccessToken,
-    setAccessToken,
-  });
+  );
 
   const updatedWatchPairs = await response.json();
 
-  return updatedWatchPairs;
+  return updatedWatchPairs.watchPairs as Array<string>;
 };
 
 export default setUserWatchPairs;

@@ -47,7 +47,12 @@ const WatchPairsDropdown = ({
       >
         <span className="text-black inline-block">Watch Pairs</span>
 
-        <MdChevronLeft className={`${isOpen ? '' : '-'}rotate-90 ml-4`} />
+        {/* TODO: investigate why styling doesn't work when done in oneline */}
+        {isOpen ? (
+          <MdChevronLeft className="rotate-90 ml-4" />
+        ) : (
+          <MdChevronLeft className="-rotate-90 ml-4" />
+        )}
       </div>
       {isOpen && (
         <div className="absolute w-full max-h-96 overflow-auto bg-white no-scrollbar">

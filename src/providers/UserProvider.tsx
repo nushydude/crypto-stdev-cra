@@ -97,6 +97,19 @@ const UserProvider = ({ children }: Props) => {
     [fetchProfile],
   );
 
+  const authedFetch = useCallback(
+    (url: RequestInfo | URL, init?: RequestInit | undefined) => {
+      return fetchWithToken({
+        url,
+        options: init,
+        accessToken,
+        refreshAccessToken: fetchAccessToken,
+        setAccessToken,
+      });
+    },
+    [accessToken, fetchAccessToken],
+  );
+
   useEffect(() => {
     if (refreshToken) {
       fetchProfile();
@@ -109,15 +122,16 @@ const UserProvider = ({ children }: Props) => {
 
   const value = {
     accessToken,
+    authedFetch,
     fetchAccessToken,
+    fetchProfile,
     isLoggedIn: !!refreshToken,
     login,
+    profile,
     refreshToken,
     removeUser,
     setAccessToken,
     setRefreshToken,
-    profile,
-    fetchProfile,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
