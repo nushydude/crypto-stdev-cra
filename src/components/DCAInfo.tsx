@@ -9,8 +9,8 @@ export const DCAInfo = ({ targetPrice, avgPrice, shouldDCA }: Props) => {
 
   return (
     <div data-testid="dca-info">
-      <p className="mb-1">Target price = {targetPrice.toFixed(4)}</p>
-      <p className="mb-1">Spot price = {avgPrice.toFixed(4)}</p>
+      <p className="mb-1">Target price = {targetPrice.toFixed(6)}</p>
+      <p className="mb-1">Spot price = {avgPrice.toFixed(6)}</p>
       <p className="mb-1">
         {dip > 0 ? 'Rise' : 'Dip'} from target price ={' '}
         {Math.abs(dip).toFixed(2)}%
