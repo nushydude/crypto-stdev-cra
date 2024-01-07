@@ -40,9 +40,9 @@ const WatchPairsDropdown = ({
   }, [search, items]);
 
   return (
-    <div className="relative w-full md:w-80 mx-auto" ref={ref}>
+    <div className="relative w-full sm:w-80 mx-auto z-10" ref={ref}>
       <div
-        className="flex flex-row justify-between items-center px-4 py-2 mb-2 cursor-pointer border border-gray-300 bg-gray-100"
+        className="flex flex-row justify-between items-center px-4 py-2 cursor-pointer border border-gray-300 bg-gray-100"
         onClick={() => setIsOpen((open) => !open)}
       >
         <span className="text-black inline-block">Watch Pairs</span>
@@ -55,7 +55,7 @@ const WatchPairsDropdown = ({
         )}
       </div>
       {isOpen && (
-        <div className="absolute w-full max-h-96 overflow-auto bg-white no-scrollbar">
+        <div className="absolute w-full max-h-96 overflow-auto bg-white no-scrollbar shadow-slate-300 shadow">
           <div className="p-2 relative">
             <input
               type="text"
