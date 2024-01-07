@@ -120,8 +120,8 @@ const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
                 First, it calculates the average opening price (mean) and the
                 standard deviation, a measure of price volatility. We then
                 establish a target price, which is set below the average price,
-                adjusted by a{' '}
-                {sdMultiplier === 1 ? 'factor' : `${sdMultiplier} factors`} of
+                adjusted by{' '}
+                {sdMultiplier === 1 ? 'a factor' : `${sdMultiplier} factors`} of
                 standard deviation to account for volatility. If the current
                 average price is less than this target price, it indicates that
                 the currency is trading at a 'dip,' and it might be a good
