@@ -40,7 +40,7 @@ const WatchPairsDropdown = ({
   }, [search, items]);
 
   return (
-    <div className="relative w-full sm:w-80 mx-auto z-10" ref={ref}>
+    <div className="relative w-full sm:w-80 mx-auto z-30" ref={ref}>
       <div
         className="flex flex-row justify-between items-center px-4 py-2 cursor-pointer border border-gray-300 bg-gray-100"
         onClick={() => setIsOpen((open) => !open)}

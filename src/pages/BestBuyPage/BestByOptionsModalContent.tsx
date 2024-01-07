@@ -25,7 +25,6 @@ const BestByOptionsModalContent = ({ setOptions, options }: Props) => {
           <select
             data-testid="input-interval"
             className="appearance-none w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            // {...register('interval', { required: true })}
             value={interval}
             onChange={(e) => setInterval(e.target.value as Interval)}
           >
@@ -40,10 +39,6 @@ const BestByOptionsModalContent = ({ setOptions, options }: Props) => {
             ▼
           </div>
         </div>
-
-        {/* {errors.interval && (
-            <p className="text-red-400 text-sm">This field is required</p>
-          )} */}
       </div>
 
       <div className="mb-2 md:mb-4">
@@ -55,7 +50,6 @@ const BestByOptionsModalContent = ({ setOptions, options }: Props) => {
           id="limit"
           type="number"
           className="w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          // {...register('limit', { required: true })}
           onChange={(e) => {
             const nextLimit = parseInt(e.target.value);
             if (Number.isNaN(nextLimit)) {

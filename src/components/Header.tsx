@@ -23,7 +23,7 @@ export const Header = () => {
     <div
       data-testid="header"
       ref={ref}
-      className="w-full px-2 bg-black text-white mb-2 fixed h-14 top-0 left-0 right-0 z-10 shadow-sm  md:h-12 py-2 md:pt-2 md:pb-4"
+      className="w-full px-2 bg-black text-white mb-2 fixed h-14 top-0 left-0 right-0 z-40 shadow-sm  md:h-12 py-2 md:pt-2 md:pb-4"
     >
       <div className="max-w-7xl mx-auto px-2 flex justify-between align-middle">
         <div className="hidden md:flex md:items-center">
