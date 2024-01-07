@@ -60,6 +60,20 @@ const BestByOptionsModalContent = ({ setOptions, options }: Props) => {
           }}
           value={limit}
         />
+      </div>
+
+      <div className="mb-2 md:mb-4">
+        <label htmlFor="limit" className="mb-1 block">
+          Display the mini charts
+        </label>
+        <input
+          data-testid="input-toggle-mini-charts-visibility"
+          id="input-toggle-mini-charts-visibility"
+          type="checkbox"
+          className="w-full px-3 py-2 bg-white rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          onChange={(e) => setShowCharts(e.target.checked)}
+          checked={showCharts}
+        />
         {/* {errors.limit && (
             <p className="text-red-400 text-sm">This field is required</p>
           )} */}
