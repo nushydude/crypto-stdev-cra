@@ -5,7 +5,7 @@ import { FieldValues } from './types';
 const LOCAL_STORAGE_KEY = 'default_token_options';
 
 export const getDefaultTokenOptions = (
-  parsed: qs.ParsedQuery<string>,
+  queryStringValues: qs.ParsedQuery<string>,
 ): FieldValues => {
   // Load from local storage
   let storedOptions: Partial<FieldValues> = {};
@@ -24,16 +24,16 @@ export const getDefaultTokenOptions = (
   let limit = storedOptions.limit || 100;
 
   // Prioritize query string over local storage and default values
-  if (typeof parsed.symbol === 'string') {
-    symbol = parsed.symbol;
+  if (typeof queryStringValues.symbol === 'string') {
+    symbol = queryStringValues.symbol;
   }
 
-  if (typeof parsed.interval === 'string') {
-    interval = parsed.interval as Interval;
+  if (typeof queryStringValues.interval === 'string') {
+    interval = queryStringValues.interval as Interval;
   }
 
-  if (typeof parsed.limit === 'string') {
-    limit = parseInt(parsed.limit);
+  if (typeof queryStringValues.limit === 'string') {
+    limit = parseInt(queryStringValues.limit);
   }
 
   // Save to local storage

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import qs from 'query-string';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Interval } from '../../types/interval';
@@ -8,6 +8,8 @@ import { TokenOptionsForm } from './TokenOptionsForm';
 import getDisplayData from './getDisplayData';
 import { getDefaultTokenOptions } from './getDefaultTokenOptions';
 import { TokenContent } from './TokenContent';
+
+const LOCAL_STORAGE_KEY = 'SINGLE_TOKEN_PAGE-HISTORICAL_PAIRS';
 
 type FieldValues = {
   symbol: string;
@@ -24,6 +26,42 @@ const SingleTokenPage = () => {
     // So that you can bookmark a particular URL for quick access.
     getDefaultTokenOptions(qs.parse(location.search)),
   ]);
+
+  // Get the historicalPairs from LocalStorage or initialize it to an empty array.
+  const [historicalPairs, setHistoricalPairs] = useState<string[]>(() => {
+    const pairs = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return pairs ? JSON.parse(pairs) : [];
+  });
+
+  // Remove the pair from the historicalPairs
+  const removePair = (pair: string) => {
+    setHistoricalPairs((prev) => prev.filter((item) => item !== pair));
+  };
+
+  // Save the historicalPairs to LocalStorage whenever it changes.
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(historicalPairs));
+  }, [historicalPairs]);
+
+  // If successful i.e. fetchStatus is FETCH_STATUS.success, add the symbol to the end of the historicalPairs
+  // and only store the last 4 pairs and then save it to LocalStorage.
+  useEffect(() => {
+    if (fetchStatus === FETCH_STATUS.success) {
+      setHistoricalPairs((prev) => {
+        const uniquePairs = [
+          ...new Set(
+            [
+              data[0]?.symbol,
+              ...prev.filter((item) => item !== data[0]?.symbol),
+            ]
+              // store only the last 6 pairs
+              .slice(-6),
+          ),
+        ];
+        return uniquePairs;
+      });
+    }
+  }, [data, fetchStatus]);
 
   const onSubmit = (fieldValues: FieldValues) => {
     refetch([fieldValues]);
@@ -48,6 +86,8 @@ const SingleTokenPage = () => {
       <div className="w-full mr-0 md:w-60 md:flex-shrink-0 md:mr-4">
         <TokenOptionsForm
           defaultValues={getDefaultTokenOptions(qs.parse(location.search))}
+          historicalPairs={historicalPairs}
+          removePair={removePair}
           allowSubmission={fetchStatus !== FETCH_STATUS.fetching}
           onSubmit={onSubmit}
           onValueChange={onFormValueChange}
