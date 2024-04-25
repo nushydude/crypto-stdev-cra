@@ -43,21 +43,21 @@ export const KLineChart = ({ data, variant = 'detailed' }: Props) => {
         },
         scales: {
           x: {
+            display: variant === 'detailed',
             ticks: {
               display: variant === 'detailed',
             },
             grid: {
-              drawBorder: false,
               display: variant === 'detailed',
             },
           },
           y: {
+            display: variant === 'detailed',
             ticks: {
               display: variant === 'detailed',
               // beginAtZero: true,
             },
             grid: {
-              drawBorder: false,
               display: variant === 'detailed',
             },
           },

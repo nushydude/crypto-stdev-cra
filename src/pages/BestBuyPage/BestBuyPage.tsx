@@ -5,7 +5,7 @@ import { KLineChart } from '../../components/KLineChart';
 import { Skeleton } from './Skeleton';
 import { getKLineConfigs } from './getKLineConfigs';
 import { getTransformedKLineDataSortedByDipMemoized } from './getTransformedKLineDataSortedByDip';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { BestBuyItem } from './BestBuyItem';
 import WatchPairsDropdown from '../../containers/WatchPairsDropdown';
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -14,6 +14,8 @@ import { Interval } from '../../types/interval';
 import Modal from '../../components/Modal';
 import BestByOptionsModalContent from './BestByOptionsModalContent';
 import { MdSettings, MdInfo, MdClose } from 'react-icons/md';
+
+const LOCAL_STORAGE_KEY = 'BEST_BUY_PAGE-OPTIONS';
 
 interface Props {
   // Best Buy and Best DCA are separated by a multiplier.
@@ -27,10 +29,15 @@ const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
     interval: Interval;
     limit: number;
     showCharts: boolean;
-  }>({
-    interval: '4h',
-    limit: 100,
-    showCharts: true,
+  }>(() => {
+    const options = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return options
+      ? JSON.parse(options)
+      : {
+          interval: '4h',
+          limit: 100,
+          showCharts: true,
+        };
   });
   const [showInfoPanel, setShowInfoPanel] = useState<boolean>(false);
 
@@ -42,6 +49,11 @@ const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
     setOptions(options);
     setShowOptionsModal(false);
   };
+
+  // Persist the options to the LocalStorage.
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(options));
+  }, [options]);
 
   const klineFetchConfigs = useMemo(
     () =>
@@ -139,7 +151,10 @@ const BestBuyPage = ({ sdMultiplier = 1 }: Props) => {
 
         {fetchStatus === FETCH_STATUS.fetching &&
           sortedByLargestDip.length === 0 && (
-            <Skeleton rows={klineFetchConfigs.length} />
+            <Skeleton
+              rows={klineFetchConfigs.length}
+              showChartSection={options.showCharts}
+            />
           )}
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
