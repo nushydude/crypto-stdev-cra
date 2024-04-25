@@ -2,12 +2,15 @@ import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { FieldValues } from './types';
 import { TokensSelector } from '../../components/TokensSelector';
+import HistoricalSelectedPairs from './HistoricalSelectedPairs';
 
 type Props = {
   defaultValues: Partial<FieldValues>;
   allowSubmission: boolean;
   onSubmit: (fieldValues: FieldValues) => void;
   onValueChange: (value: Partial<FieldValues>) => void;
+  historicalPairs: string[];
+  removePair: (pair: string) => void;
 };
 
 export const TokenOptionsForm = ({
@@ -15,6 +18,8 @@ export const TokenOptionsForm = ({
   allowSubmission = true,
   onSubmit,
   onValueChange,
+  historicalPairs,
+  removePair,
 }: Props) => {
   const {
     register,
@@ -22,12 +27,25 @@ export const TokenOptionsForm = ({
     control,
     watch,
     formState: { errors },
+    setValue,
+    getValues,
   } = useForm<FieldValues>({ defaultValues });
 
+  // Subscribe to form value changes
   useEffect(() => {
     const subscription = watch(onValueChange);
     return () => subscription.unsubscribe();
   }, [watch, onValueChange]);
+
+  const handleClickOnPair = (symbol: string) => {
+    const currentValues = getValues();
+    const nextValues = { ...currentValues, symbol };
+
+    // This should call onValueChange as well because of the above subscription.
+    setValue('symbol', symbol);
+
+    onSubmit(nextValues);
+  };
 
   return (
     <form
@@ -50,6 +68,14 @@ export const TokenOptionsForm = ({
         {errors.symbol && (
           <p className="text-red-400 text-sm">This field is required</p>
         )}
+      </div>
+
+      <div className="mb-2 md:mb-4">
+        <HistoricalSelectedPairs
+          selectedPairs={historicalPairs}
+          onPairClick={handleClickOnPair}
+          removePair={removePair}
+        />
       </div>
 
       <div className="mb-2 md:mb-4">
