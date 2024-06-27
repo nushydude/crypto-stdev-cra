@@ -1,9 +1,21 @@
+import { z } from 'zod';
 import { config } from '../config';
+
+// Define the Zod schema for the input
+const watchPairsSchema = z.array(z.string());
+
+// Define the Zod schema for the response
+const responseSchema = z.object({
+  watchPairs: z.array(z.string())
+});
 
 const setUserWatchPairs = async (
   fetchFn: (url: RequestInfo | URL, options: RequestInit) => Promise<Response>,
   watchPairs: string[],
 ): Promise<Array<string>> => {
+  // Validate the input
+  watchPairsSchema.parse(watchPairs);
+
   const response = await fetchFn(
     `${config.API_URI}/api/watch_pairs`,
     {
@@ -17,7 +29,10 @@ const setUserWatchPairs = async (
 
   const updatedWatchPairs = await response.json();
 
-  return updatedWatchPairs.watchPairs as Array<string>;
+  // Validate the response
+  const parsedResponse = responseSchema.parse(updatedWatchPairs);
+
+  return parsedResponse.watchPairs;
 };
 
 export default setUserWatchPairs;

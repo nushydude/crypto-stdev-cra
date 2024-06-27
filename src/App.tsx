@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { ToastContainer } from 'react-toastify';
@@ -9,7 +10,7 @@ import { Footer } from './components/Footer';
 
 const history = createBrowserHistory();
 
-export const App = () => {
+const App = () => {
   useOneSignal();
 
   return (
@@ -28,3 +29,5 @@ export const App = () => {
     </Router>
   );
 };
+
+export default Sentry.withProfiler(App);
