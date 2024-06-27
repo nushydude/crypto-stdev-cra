@@ -1,11 +1,22 @@
 import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { z } from 'zod';
+
+// Define the Zod schema for the JWT payload
+const jwtPayloadSchema = z.object({
+  exp: z.number().optional(), // 'exp' is optional since it may not always be present
+});
 
 export const isTokenExpiringSoon = (
   jwt: string,
   threshold = 5 * 60 * 1000 /* 5 minutes */,
-) => {
+): boolean => {
   try {
-    const exp = (jwtDecode(jwt) as JwtPayload)?.exp;
+    const decodedPayload = jwtDecode<JwtPayload>(jwt);
+    
+    // Validate the decoded payload
+    const parsedPayload = jwtPayloadSchema.parse(decodedPayload);
+
+    const exp = parsedPayload?.exp;
 
     if (exp === undefined) {
       return false;
