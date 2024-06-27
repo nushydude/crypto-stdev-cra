@@ -5,8 +5,10 @@ const pageTitles = {
   [routes.BEST_BUY]: 'Best Buy',
   [routes.BEST_DCA]: 'Best DCA',
   [routes.SETTINGS]: 'Settings',
-  [routes.SINGLE]: 'Single token',
+  [routes.SINGLE]: 'Single Token',
   [routes.PROFILE]: 'Profile',
+  [routes.CFAGI]: 'Fear and Greed Index',
+
 };
 
 export const PageTitle = () => {

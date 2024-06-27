@@ -6,6 +6,7 @@ export const routes = {
   LOGIN: '/login',
   SIGNUP: '/signup',
   PROFILE: '/profile',
+  CFAGI: '/cfagi',
   // ----
   PLAYGROUND: '/playground',
 };
