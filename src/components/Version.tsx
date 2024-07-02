@@ -14,12 +14,18 @@ const Version = ({ clickCountThresholdToRedirectToPlayground = 6 }: Props) => {
     setClickCount((c) => c + 1);
   }, []);
 
+  const redirect = useCallback(() => {
+    history.push(routes.PLAYGROUND);
+  }, [history]);
+
+  const hasReachedThreshold =
+    clickCount >= clickCountThresholdToRedirectToPlayground;
+
   useEffect(() => {
-    if (clickCount >= clickCountThresholdToRedirectToPlayground) {
-      setClickCount(0);
-      history.push(routes.PLAYGROUND);
+    if (hasReachedThreshold) {
+      redirect();
     }
-  }, [history, clickCount, clickCountThresholdToRedirectToPlayground]);
+  }, [hasReachedThreshold, redirect]);
 
   useEffect(() => {
     const timerID = setTimeout(() => {
