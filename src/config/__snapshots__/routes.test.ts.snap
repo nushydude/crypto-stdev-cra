@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`routes should match snapshot 1`] = `
+Object {
+  "BEST_BUY": "/best-buy",
+  "BEST_DCA": "/best-dca",
+  "CFAGI": "/cfagi",
+  "LOGIN": "/login",
+  "PLAYGROUND": "/playground",
+  "PROFILE": "/profile",
+  "SETTINGS": "/settings",
+  "SIGNUP": "/signup",
+  "SINGLE": "/single",
+}
+`;

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import SignupForm, { SubmitValues } from '../../components/SignupForm';
-import { config } from '../../config';
+import { appConfig } from '../../config';
 import { UserContext } from '../../context/user';
 import useRedirectOnLogin from '../../hooks/useRedirectOnLogin';
 import { routes } from '../../config/routes';
@@ -10,7 +10,7 @@ const SignupPage = () => {
   useRedirectOnLogin(routes.BEST_DCA);
 
   const onSubmit = (fieldValues: SubmitValues) =>
-    fetch(`${config.API_URI}/api/user`, {
+    fetch(`${appConfig.API_URI}/api/user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

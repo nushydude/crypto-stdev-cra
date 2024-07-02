@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Profile, UserContext } from '../context/user';
 import usePersistedState from '../hooks/usePersistedState';
-import { config } from '../config';
+import { appConfig } from '../config';
 import { fetchWithToken } from '../utils/fetchWithToken';
 import { fetchAccessTokenUsingRefreshToken } from '../utils/fetchAccessTokenUsingRefreshToken';
 
@@ -58,7 +58,7 @@ const UserProvider = ({ children }: Props) => {
     }
 
     return fetchWithToken({
-      url: `${config.API_URI}/api/auth/profile`,
+      url: `${appConfig.API_URI}/api/auth/profile`,
       accessToken,
       options: {
         method: 'GET',

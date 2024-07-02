@@ -1,10 +1,9 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocalStorage } from 'react-use';
 import { toast, ToastPosition } from 'react-toastify';
 import { MdUploadFile } from 'react-icons/md';
 import { DEFAULT_SETTINGS } from '../../consts/DefaultSettings';
-import { config } from '../../config';
+import { appConfig } from '../../config';
 
 const toastOptions = {
   position: 'top-center' as ToastPosition,
@@ -68,7 +67,7 @@ const SettingsJsonUri = ({ onUpdate }: Props) => {
 
     // fetch JSON file
     try {
-      const res = await fetch(`${config.API_URI}/api/settings`, {
+      const res = await fetch(`${appConfig.API_URI}/api/settings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

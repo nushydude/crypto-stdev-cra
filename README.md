@@ -70,16 +70,41 @@ git clone https://github.com/nushydude/crypto-stdev-express
 3. **Change the API Endpoint** Update the `API_URI` in `src/config.ts` file to
    point to the local API.
 
-## Usage 📖
+## Checking out a branch and creating a pull request 🛠️
 
-1. **Price Movement Visualizer**: Enter your trading pair, set your desired
-   interval and points, and visualize the data.
-2. **DCA Pair Suggester**: Explore the suggested pairs or add your own via the
-   Settings tab.
-3. **Optimal Price Predictor**: Select your trading pair and discover the best
-   prices over a long period.
-4. **Settings**: Add, remove, or adjust trading pairs with a simple JSON file
-   upload.
+1. In Github project `Crypto DCA Plan using Statistics`, create a new issue.
+   (https://github.com/users/nushydude/projects/1/views/1)
+2. Assign the issue to yourself.
+3. Open the issue and ceate a new branch from the issue under Development
+   section.
+4. Checkout the branch in your local repository. (It will show the command to
+   checkout the branch)
+5. Make changes in the branch.
+6. Push the changes to the branch.
+7. Create a pull request from the branch to the main branch.
+
+## Deployment 🚀
+
+1. When a commit it pushed to a branch, Vercel will deploy it to a preview URL.
+   This is done via a Github action defined in
+   .github/workflows/deploy-preview.yml. The preview URL will be available in
+   "Deploy Project Artifacts to Vercel" step in the Github action.
+2. Since there aren't any reviewers, the pull request can be merged by the
+   author. Ensure that the preview URL is working as expected before merging.
+3. When a pull request is merged to the main branch, Vercel will deploy it to
+   the production URL. This is done via a Github action defined in
+   .github/workflows/build-deploy.yml. The production URL will be available in
+   "Deploy Project Artifacts to Vercel" step in the Github action.
+4. The production URL is also available in the Vercel project dashboard and it
+   is crypto-stdev-cra.vercel.app
+
+## Tech Stack 🛠
+
+1. ️Create React App
+2. TypeScript
+3. Chart.js
+4. tailwindcss + a bit of Styled Components
+5. Vercel
 
 ## Contributing 🤝
 

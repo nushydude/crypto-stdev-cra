@@ -1,5 +1,5 @@
 import { fetchSymbols } from './fetchSymbols';
-import { config } from '../config';
+import { appConfig } from '../config';
 import { DEFAULT_SYMBOLS } from '../consts/DefaultSymbols';
 
 describe('fetchSymbols', () => {
@@ -17,7 +17,9 @@ describe('fetchSymbols', () => {
     const result = await fetchSymbols();
 
     // should call the correct endpoint
-    expect(global.fetch).toHaveBeenCalledWith(`${config.API_URI}/api/symbols`);
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${appConfig.API_URI}/api/symbols`,
+    );
 
     // should equal the mock symbols
     expect(result).toEqual(mockSymbols);
@@ -30,7 +32,9 @@ describe('fetchSymbols', () => {
     const result = await fetchSymbols();
 
     // should call the correct endpoint
-    expect(global.fetch).toHaveBeenCalledWith(`${config.API_URI}/api/symbols`);
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${appConfig.API_URI}/api/symbols`,
+    );
 
     // should equal the default symbols
     expect(result).toEqual(DEFAULT_SYMBOLS);

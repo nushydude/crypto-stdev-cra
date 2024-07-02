@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/react';
 import { z } from 'zod';
 
 jest.mock('../config', () => ({
-  config: {
+  appConfig: {
     API_URI: 'https://example.com',
   },
 }));
@@ -33,7 +33,7 @@ describe('fetchUserWatchPairs', () => {
         headers: {
           'Content-Type': 'application/json',
         },
-      }
+      },
     );
     expect(result).toEqual(['BTC-USD', 'ETH-USD']);
   });
@@ -54,7 +54,9 @@ describe('fetchUserWatchPairs', () => {
 
     const result = await fetchUserWatchPairs(mockFetch);
 
-    expect(Sentry.captureException).toHaveBeenCalledWith(new Error('Network error'));
+    expect(Sentry.captureException).toHaveBeenCalledWith(
+      new Error('Network error'),
+    );
     expect(result).toEqual([]);
   });
 
@@ -72,7 +74,7 @@ describe('fetchUserWatchPairs', () => {
         headers: {
           'Content-Type': 'application/json',
         },
-      }
+      },
     );
     expect(result).toEqual([]);
   });
