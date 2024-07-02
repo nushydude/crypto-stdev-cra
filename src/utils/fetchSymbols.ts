@@ -19,6 +19,7 @@ export const fetchSymbols = async (): Promise<Array<string>> => {
     return parsedResponse.symbols;
   } catch (error) {
     Sentry.captureException(error);
-    return DEFAULT_SYMBOLS;
   }
+
+  return DEFAULT_SYMBOLS;
 };
