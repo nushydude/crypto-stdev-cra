@@ -23,13 +23,10 @@ const fetchUserWatchPairs = async (
 
     return parsedResponse;
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      Sentry.captureException(error);
-    } else {
-      Sentry.captureException(error);
-    }
-    return [];
+    Sentry.captureException(error);
   }
+
+  return [];
 };
 
 export default fetchUserWatchPairs;
