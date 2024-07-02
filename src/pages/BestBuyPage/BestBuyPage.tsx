@@ -1,3 +1,5 @@
+import { MdSettings, MdInfo, MdClose } from 'react-icons/md';
+import { useDeepCompareEffect } from 'react-use';
 import { DCAInfo } from '../../components/DCAInfo';
 import { useBinanceKLine } from '../../hooks/useBinanceKline';
 import { FETCH_STATUS } from '../../consts/FetchStatus';
@@ -8,12 +10,10 @@ import { getTransformedKLineDataSortedByDipMemoized } from './getTransformedKLin
 import { useEffect, useMemo, useState } from 'react';
 import { BestBuyItem } from './BestBuyItem';
 import WatchPairsDropdown from '../../containers/WatchPairsDropdown';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 import useWatchPairs from '../../hooks/useWatchPairs';
 import { Interval } from '../../types/interval';
 import Modal from '../../components/Modal';
 import BestByOptionsModalContent from './BestByOptionsModalContent';
-import { MdSettings, MdInfo, MdClose } from 'react-icons/md';
 
 const LOCAL_STORAGE_KEY = 'BEST_BUY_PAGE-OPTIONS';
 

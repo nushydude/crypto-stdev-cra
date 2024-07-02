@@ -17,27 +17,21 @@ const WatchPairsDropdown = ({
   const [search, setSearch] = useState('');
   const [filteredItems, setFilteredItems] = useState(items);
   const ref = useRef(null);
-  useClickAway(ref, () => {
-    setIsOpen(false);
-  });
+  useClickAway(ref, () => setIsOpen(false));
 
   useEffect(() => {
-    let timerID: NodeJS.Timeout;
+    const timerID = setTimeout(() => {
+      const lowercasesearch = search.toLowerCase();
 
-    timerID = setTimeout(() => {
-      if (search) {
-        setFilteredItems(
-          items.filter((item) =>
-            item.toLowerCase().includes(search.toLowerCase()),
-          ),
-        );
-      } else {
-        setFilteredItems(items);
-      }
+      setFilteredItems(
+        items.filter((item) => item.toLowerCase().includes(lowercasesearch)),
+      );
     }, 250);
 
     return () => clearTimeout(timerID);
   }, [search, items]);
+
+  const iconClass = isOpen ? 'rotate-90' : '-rotate-90';
 
   return (
     <div className="relative w-full sm:w-80 mx-auto z-30" ref={ref}>
@@ -46,13 +40,7 @@ const WatchPairsDropdown = ({
         onClick={() => setIsOpen((open) => !open)}
       >
         <span className="text-black inline-block">Watch Pairs</span>
-
-        {/* TODO: investigate why styling doesn't work when done in oneline */}
-        {isOpen ? (
-          <MdChevronLeft className="rotate-90 ml-4" />
-        ) : (
-          <MdChevronLeft className="-rotate-90 ml-4" />
-        )}
+        <MdChevronLeft className={`${iconClass} ml-4`} />
       </div>
       {isOpen && (
         <div className="absolute w-full max-h-96 overflow-auto bg-white no-scrollbar shadow-slate-300 shadow">
