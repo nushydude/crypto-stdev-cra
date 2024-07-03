@@ -1,5 +1,5 @@
 import WatchPairsDropdownComponent from '../components/WatchPairsDropdown';
-import { useSymbols } from '../hooks/useSymbols';
+import { useFetchSymbols } from '../hooks/useFetchSymbols';
 
 interface Props {
   watchPairs: string[];
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const WatchPairsDropdown = ({ watchPairs, updateWatchPairs }: Props) => {
-  const { symbols } = useSymbols();
+  const { symbols } = useFetchSymbols();
 
   const onCheckChanged = (symbol: string, checked: boolean) => {
     const newWatchPairs = checked

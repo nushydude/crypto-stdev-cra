@@ -1,16 +1,19 @@
-import React, { ChangeEventHandler } from 'react';
-import { useSymbols } from '../hooks/useSymbols';
+import React, { ChangeEvent } from 'react';
+import { useFetchSymbols } from '../hooks/useFetchSymbols';
 
 type Props = {
   selectedValue: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const TokensSelector = ({ selectedValue, onChange }: Props) => {
-  const { symbols } = useSymbols();
+  const { symbols } = useFetchSymbols();
 
   return (
     <>
+      <label htmlFor="symbol" className="sr-only">
+        Symbol
+      </label>
       <input
         data-testid="input-symbol"
         id="symbol"
