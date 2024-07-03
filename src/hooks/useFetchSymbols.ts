@@ -9,7 +9,7 @@ export const useFetchSymbols = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  const symbols = data || DEFAULT_SYMBOLS;
+  const symbols = (data || DEFAULT_SYMBOLS).sort((a, b) => a.localeCompare(b));
 
   return { isLoading, symbols };
 };

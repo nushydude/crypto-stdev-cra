@@ -23,7 +23,7 @@ const App = () => {
         <AppRoutes />
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
 
       <ToastContainer />
     </Router>

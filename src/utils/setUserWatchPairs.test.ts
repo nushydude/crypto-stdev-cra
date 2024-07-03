@@ -2,7 +2,7 @@ import { z } from 'zod';
 import setUserWatchPairs from './setUserWatchPairs';
 
 jest.mock('../config', () => ({
-  config: {
+  appConfig: {
     API_URI: 'https://example.com',
   },
 }));
@@ -32,7 +32,7 @@ describe('setUserWatchPairs', () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ watchPairs }),
-      }
+      },
     );
     expect(result).toEqual(['BTC-USD', 'ETH-USD']);
   });
@@ -40,7 +40,9 @@ describe('setUserWatchPairs', () => {
   it('should throw an error if input is invalid', async () => {
     const watchPairs = [123, 'ETH-USD']; // Invalid input
 
-    await expect(setUserWatchPairs(mockFetch, watchPairs as any)).rejects.toThrow(z.ZodError);
+    await expect(
+      setUserWatchPairs(mockFetch, watchPairs as any),
+    ).rejects.toThrow(z.ZodError);
   });
 
   it('should throw an error if response is invalid', async () => {
@@ -52,7 +54,9 @@ describe('setUserWatchPairs', () => {
 
     const watchPairs = ['BTC-USD', 'ETH-USD'];
 
-    await expect(setUserWatchPairs(mockFetch, watchPairs)).rejects.toThrow(z.ZodError);
+    await expect(setUserWatchPairs(mockFetch, watchPairs)).rejects.toThrow(
+      z.ZodError,
+    );
   });
 
   it('should throw an error if fetch fails', async () => {
@@ -60,6 +64,8 @@ describe('setUserWatchPairs', () => {
 
     const watchPairs = ['BTC-USD', 'ETH-USD'];
 
-    await expect(setUserWatchPairs(mockFetch, watchPairs)).rejects.toThrow('Network error');
+    await expect(setUserWatchPairs(mockFetch, watchPairs)).rejects.toThrow(
+      'Network error',
+    );
   });
 });
