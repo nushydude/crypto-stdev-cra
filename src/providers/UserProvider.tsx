@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import * as Sentry from '@sentry/react';
 import { Profile, UserContext } from '../context/user';
 import usePersistedState from '../hooks/usePersistedState';
 import { appConfig } from '../config';
@@ -38,19 +39,21 @@ const UserProvider = ({ children }: Props) => {
     setProfile(null);
   }, []);
 
-  const fetchAccessToken = useCallback(
-    () =>
-      fetchAccessTokenUsingRefreshToken(refreshToken)
-        .then((accessToken) => {
-          setAccessToken(accessToken);
-          return accessToken;
-        })
-        .catch((error) => {
-          console.log(error);
-          removeUser();
-        }),
-    [setAccessToken, refreshToken, removeUser],
-  );
+  const fetchAccessToken = useCallback(async () => {
+    let newAccessToken = '';
+
+    try {
+      newAccessToken = await fetchAccessTokenUsingRefreshToken(refreshToken);
+
+      setAccessToken(newAccessToken);
+    } catch (error) {
+      Sentry.captureException(error);
+
+      removeUser();
+    }
+
+    return newAccessToken;
+  }, [setAccessToken, refreshToken, removeUser]);
 
   const fetchProfile = useCallback(() => {
     if (!accessToken) {

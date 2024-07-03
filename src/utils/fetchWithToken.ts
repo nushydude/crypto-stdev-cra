@@ -3,7 +3,7 @@ interface FetchWithTokenParams {
   options?: RequestInit;
   accessToken: string | null;
   refreshAccessToken: () => Promise<string>;
-  setAccessToken?: (accessToken: string) => void;
+  setAccessToken?: (accessToken: string | null) => void;
 }
 
 export const fetchWithToken = async ({
@@ -13,7 +13,7 @@ export const fetchWithToken = async ({
   refreshAccessToken,
   setAccessToken,
 }: FetchWithTokenParams) => {
-  const getHeaders = (accessToken: string | null) => {
+  const getHeaders = (accessToken?: string | null) => {
     return {
       ...options.headers,
       // Add the Authorization header to the request

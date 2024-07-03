@@ -1,7 +1,7 @@
 import { appConfig } from '../config';
 
 export const fetchAccessTokenUsingRefreshToken = async (
-  refreshToken: string,
+  refreshToken: string | null,
 ): Promise<string> => {
   if (!refreshToken) {
     throw new Error('No refresh token available');

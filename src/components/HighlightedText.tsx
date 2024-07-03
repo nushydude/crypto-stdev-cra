@@ -1,11 +1,13 @@
-import React from 'react';
-
 type Props = {
   text: string;
   highlight: string;
 };
 
 const HighlightedText = ({ text, highlight }: Props) => {
+  if (!highlight) {
+    return <>{text}</>;
+  }
+
   const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
   return (
     <>
