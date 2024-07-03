@@ -29,6 +29,7 @@ const HistoricalSelectedPairs = ({
             }}
             className="text-gray-600 hover:text-red-500"
             aria-label={`Remove ${pair}`}
+            tabIndex={-1}
           >
             ✕
           </button>

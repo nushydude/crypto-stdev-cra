@@ -1,5 +1,5 @@
 import { fetchKLineData } from './fetchKLineData';
-import { config } from '../config';
+import { appConfig } from '../config';
 
 describe('fetchKLineData', () => {
   beforeEach(() => {
@@ -23,7 +23,7 @@ describe('fetchKLineData', () => {
     // should call the correct endpoint
     expect(global.fetch).toHaveBeenCalledWith(
       `${
-        config.API_URI
+        appConfig.API_URI
       }/api/binance_kline?symbol=${symbol.trim()}&interval=${interval}&limit=${limit}`,
     );
 

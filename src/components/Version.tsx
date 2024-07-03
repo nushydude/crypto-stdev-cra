@@ -1,7 +1,6 @@
-import { useHistory } from 'react-router-dom';
-import { config } from '../config';
 import { useCallback, useEffect, useState } from 'react';
-import { routes } from '../config/routes';
+import { useHistory } from 'react-router-dom';
+import { appConfig, routes } from '../config';
 
 type Props = {
   clickCountThresholdToRedirectToPlayground?: number;
@@ -15,17 +14,21 @@ const Version = ({ clickCountThresholdToRedirectToPlayground = 6 }: Props) => {
     setClickCount((c) => c + 1);
   }, []);
 
+  const redirect = useCallback(() => {
+    history.push(routes.PLAYGROUND);
+  }, [history]);
+
+  const hasReachedThreshold =
+    clickCount >= clickCountThresholdToRedirectToPlayground;
+
   useEffect(() => {
-    if (clickCount >= clickCountThresholdToRedirectToPlayground) {
-      setClickCount(0);
-      history.push(routes.PLAYGROUND);
+    if (hasReachedThreshold) {
+      redirect();
     }
-  }, [history, clickCount, clickCountThresholdToRedirectToPlayground]);
+  }, [hasReachedThreshold, redirect]);
 
   useEffect(() => {
-    let timerID: NodeJS.Timeout;
-
-    setTimeout(() => {
+    const timerID = setTimeout(() => {
       setClickCount(0);
     }, 2000);
 
@@ -34,7 +37,7 @@ const Version = ({ clickCountThresholdToRedirectToPlayground = 6 }: Props) => {
 
   return (
     <span className="inline-block" onClick={increment}>
-      build {config.BUILD_NUMBER}
+      build {appConfig.BUILD_NUMBER}
     </span>
   );
 };

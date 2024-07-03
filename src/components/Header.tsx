@@ -14,7 +14,6 @@ const links = [
   { to: routes.BEST_BUY, label: 'Best Buy', icon: '🏆' },
   { to: routes.CFAGI, label: 'Fear and Greed Index', icon: '😱' },
   { to: routes.SETTINGS, label: 'Settings', icon: '⚙️' },
-
 ];
 
 export const Header = () => {
@@ -87,7 +86,6 @@ export const Header = () => {
             </>
           )}
         </div>
-        {/* <Version /> */}
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import { AppRoutes } from './components/AppRoutes';
 import { Header } from './components/Header';
 import { ServiceWorker } from './components/ServiceWorker';
 import { useOneSignal } from './hooks/useOneSignal';
-import { Footer } from './components/Footer';
+// import { Footer } from './components/Footer';
 
 const history = createBrowserHistory();
 
@@ -23,7 +23,7 @@ const App = () => {
         <AppRoutes />
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
 
       <ToastContainer />
     </Router>

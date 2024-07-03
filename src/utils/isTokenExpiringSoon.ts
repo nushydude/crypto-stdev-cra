@@ -1,5 +1,6 @@
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { z } from 'zod';
+import * as Sentry from '@sentry/react';
 
 // Define the Zod schema for the JWT payload
 const jwtPayloadSchema = z.object({
@@ -12,7 +13,7 @@ export const isTokenExpiringSoon = (
 ): boolean => {
   try {
     const decodedPayload = jwtDecode<JwtPayload>(jwt);
-    
+
     // Validate the decoded payload
     const parsedPayload = jwtPayloadSchema.parse(decodedPayload);
 
@@ -24,6 +25,8 @@ export const isTokenExpiringSoon = (
 
     return Date.now() >= exp * 1000 - threshold;
   } catch (e) {
-    return true;
+    Sentry.captureException(e);
   }
+
+  return true;
 };

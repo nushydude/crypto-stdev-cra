@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
+import * as Sentry from '@sentry/react';
 import { Profile, UserContext } from '../context/user';
 import usePersistedState from '../hooks/usePersistedState';
-import { config } from '../config';
+import { appConfig } from '../config';
 import { fetchWithToken } from '../utils/fetchWithToken';
 import { fetchAccessTokenUsingRefreshToken } from '../utils/fetchAccessTokenUsingRefreshToken';
 
@@ -38,19 +39,21 @@ const UserProvider = ({ children }: Props) => {
     setProfile(null);
   }, []);
 
-  const fetchAccessToken = useCallback(
-    () =>
-      fetchAccessTokenUsingRefreshToken(refreshToken)
-        .then((accessToken) => {
-          setAccessToken(accessToken);
-          return accessToken;
-        })
-        .catch((error) => {
-          console.log(error);
-          removeUser();
-        }),
-    [setAccessToken, refreshToken, removeUser],
-  );
+  const fetchAccessToken = useCallback(async () => {
+    let newAccessToken = '';
+
+    try {
+      newAccessToken = await fetchAccessTokenUsingRefreshToken(refreshToken);
+
+      setAccessToken(newAccessToken);
+    } catch (error) {
+      Sentry.captureException(error);
+
+      removeUser();
+    }
+
+    return newAccessToken;
+  }, [setAccessToken, refreshToken, removeUser]);
 
   const fetchProfile = useCallback(() => {
     if (!accessToken) {
@@ -58,7 +61,7 @@ const UserProvider = ({ children }: Props) => {
     }
 
     return fetchWithToken({
-      url: `${config.API_URI}/api/auth/profile`,
+      url: `${appConfig.API_URI}/api/auth/profile`,
       accessToken,
       options: {
         method: 'GET',

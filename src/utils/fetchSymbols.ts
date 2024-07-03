@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import * as Sentry from '@sentry/react';
-import { config } from '../config';
+import { appConfig } from '../config';
 import { DEFAULT_SYMBOLS } from '../consts/DefaultSymbols';
 
 // Define the Zod schema for the response
@@ -10,7 +10,7 @@ const responseSchema = z.object({
 
 export const fetchSymbols = async (): Promise<Array<string>> => {
   try {
-    const response = await fetch(`${config.API_URI}/api/symbols`);
+    const response = await fetch(`${appConfig.API_URI}/api/symbols`);
     const jsonResponse = await response.json();
 
     // Validate the response
@@ -19,6 +19,7 @@ export const fetchSymbols = async (): Promise<Array<string>> => {
     return parsedResponse.symbols;
   } catch (error) {
     Sentry.captureException(error);
-    return DEFAULT_SYMBOLS;
   }
+
+  return DEFAULT_SYMBOLS;
 };

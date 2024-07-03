@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { FieldValues } from './types';
-import { TokensSelector } from '../../components/TokensSelector';
+import TokensSelector from '../../components/TokensSelector';
 import HistoricalSelectedPairs from './HistoricalSelectedPairs';
 
 type Props = {
@@ -61,7 +61,11 @@ export const TokenOptionsForm = ({
           control={control}
           name="symbol"
           render={({ field: { onChange, value } }) => (
-            <TokensSelector selectedValue={value} onChange={onChange} />
+            <TokensSelector
+              selectedValue={value}
+              onChange={onChange}
+              noResultsFoundText="No symbols found"
+            />
           )}
         />
 
