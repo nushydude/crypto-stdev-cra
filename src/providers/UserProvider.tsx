@@ -43,6 +43,9 @@ const UserProvider = ({ children }: Props) => {
     let newAccessToken = '';
 
     try {
+      if (!refreshToken) {
+        throw new Error('No refresh token available');
+      }
       newAccessToken = await fetchAccessTokenUsingRefreshToken(refreshToken);
 
       setAccessToken(newAccessToken);
