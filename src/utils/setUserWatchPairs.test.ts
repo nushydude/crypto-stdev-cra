@@ -1,22 +1,23 @@
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { z } from 'zod';
 import setUserWatchPairs from './setUserWatchPairs';
 
-jest.mock('../config', () => ({
+vi.mock('../config', () => ({
   appConfig: {
     API_URI: 'https://example.com',
   },
 }));
 
 describe('setUserWatchPairs', () => {
-  const mockFetch = jest.fn();
+  const mockFetch = vi.fn();
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should validate input and call fetch with correct parameters', async () => {
     mockFetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValue({
+      json: vi.fn().mockResolvedValue({
         watchPairs: ['BTC-USD', 'ETH-USD'],
       }),
     });
@@ -47,7 +48,7 @@ describe('setUserWatchPairs', () => {
 
   it('should throw an error if response is invalid', async () => {
     mockFetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValue({
+      json: vi.fn().mockResolvedValue({
         watchPairs: 'invalid-response',
       }),
     });

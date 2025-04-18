@@ -1,9 +1,10 @@
+import { describe, it, expect, vi, afterEach, afterAll } from 'vitest';
 import mockdate from 'mockdate';
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { isTokenExpiringSoon } from './isTokenExpiringSoon';
 
-jest.mock('jwt-decode', () => ({
-  jwtDecode: jest.fn(),
+vi.mock('jwt-decode', () => ({
+  jwtDecode: vi.fn(),
 }));
 
 describe('isTokenExpiringSoon', () => {
@@ -12,7 +13,7 @@ describe('isTokenExpiringSoon', () => {
   mockdate.set(1577836800000);
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
@@ -21,7 +22,7 @@ describe('isTokenExpiringSoon', () => {
 
   it('returns false if the token is not expiring soon', () => {
     // Mock jwtDecode to return a payload indicating the token will expire in 10 minutes
-    (jwtDecode as any).jwtDecode.mockReturnValue({
+    (jwtDecode as any).mockReturnValue({
       exp: (mockTime + 10 * 60 * 1000) / 1000,
     });
 
@@ -31,7 +32,7 @@ describe('isTokenExpiringSoon', () => {
 
   it('returns true if the token is expiring in less than five minutes', () => {
     // Mock jwtDecode to return a payload indicating the token will expire in 4 minutes
-    (jwtDecode as any).jwtDecode.mockReturnValue({
+    (jwtDecode as any).mockReturnValue({
       exp: (mockTime + 4 * 60 * 1000) / 1000,
     });
 
@@ -41,7 +42,7 @@ describe('isTokenExpiringSoon', () => {
 
   it('returns true if the token has already expired', () => {
     // Mock jwtDecode to return a payload indicating the token expired 1 minute ago
-    (jwtDecode as any).jwtDecode.mockReturnValue({
+    (jwtDecode as any).mockReturnValue({
       exp: (mockTime - 1 * 60 * 1000) / 1000,
     });
 
@@ -51,14 +52,14 @@ describe('isTokenExpiringSoon', () => {
 
   it('handles tokens with no expiration claim', () => {
     // Mock jwtDecode to return an empty payload
-    (jwtDecode as any).jwtDecode.mockReturnValue({});
+    (jwtDecode as any).mockReturnValue({});
 
     const jwt = 'no-exp-claim-token';
     expect(isTokenExpiringSoon(jwt)).toBe(false);
   });
 
   it('throws an error when jwtDecode cannot parse the token', () => {
-    (jwtDecode as any).jwtDecode.mockImplementation(() => {
+    (jwtDecode as any).mockImplementation(() => {
       throw new Error('Invalid token');
     });
 

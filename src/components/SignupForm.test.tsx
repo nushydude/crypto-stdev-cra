@@ -5,11 +5,12 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import SignupForm from './SignupForm';
 
 describe('SignupForm', () => {
   it('renders the singup form', () => {
-    render(<SignupForm onSubmit={jest.fn()} />);
+    render(<SignupForm onSubmit={vi.fn()} />);
 
     expect(screen.getByTestId('form-signup')).toBeInTheDocument();
     expect(screen.getByTestId('input-first-name')).toBeInTheDocument();
@@ -22,7 +23,7 @@ describe('SignupForm', () => {
   });
 
   it('displays error messages for empty fields on submit', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<SignupForm onSubmit={onSubmit} />);
 
     fireEvent.click(screen.getByTestId('submit-button'));
@@ -51,7 +52,7 @@ describe('SignupForm', () => {
   });
 
   it('calls onSubmit with firstname, lastname, email, password are valid and confirm password matches the password when form is submitted correctly', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<SignupForm onSubmit={onSubmit} />);
 
     fireEvent.change(screen.getByTestId('input-first-name'), {
@@ -82,7 +83,7 @@ describe('SignupForm', () => {
   });
 
   it('does not call onSubmit when firstname is missing', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<SignupForm onSubmit={onSubmit} />);
 
     fireEvent.change(screen.getByTestId('input-last-name'), {
@@ -110,7 +111,7 @@ describe('SignupForm', () => {
   });
 
   it('does not call onSubmit when lastname is missing', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<SignupForm onSubmit={onSubmit} />);
 
     fireEvent.change(screen.getByTestId('input-first-name'), {
@@ -138,7 +139,7 @@ describe('SignupForm', () => {
   });
 
   it('does not call onSubmit when email is missing', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<SignupForm onSubmit={onSubmit} />);
 
     fireEvent.change(screen.getByTestId('input-first-name'), {
@@ -155,7 +156,6 @@ describe('SignupForm', () => {
     });
 
     // Wrap in act to ensure all promises resolve
-    // We normally don't need to do this, but looks like something to do with react hook forms
     // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       fireEvent.click(screen.getByTestId('submit-button'));
@@ -166,7 +166,7 @@ describe('SignupForm', () => {
   });
 
   it('does not call onSubmit when email not an email', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<SignupForm onSubmit={onSubmit} />);
 
     fireEvent.change(screen.getByTestId('input-first-name'), {
@@ -186,7 +186,6 @@ describe('SignupForm', () => {
     });
 
     // Wrap in act to ensure all promises resolve
-    // We normally don't need to do this, but looks like something to do with react hook forms
     // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       fireEvent.click(screen.getByTestId('submit-button'));
@@ -197,7 +196,7 @@ describe('SignupForm', () => {
   });
 
   it('does not call onSubmit when password is missing', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<SignupForm onSubmit={onSubmit} />);
 
     fireEvent.change(screen.getByTestId('input-first-name'), {
@@ -214,7 +213,6 @@ describe('SignupForm', () => {
     });
 
     // Wrap in act to ensure all promises resolve
-    // We normally don't need to do this, but looks like something to do with react hook forms
     // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       fireEvent.click(screen.getByTestId('submit-button'));
@@ -225,7 +223,7 @@ describe('SignupForm', () => {
   });
 
   it('does not call onSubmit when confirm password does not match the password', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<SignupForm onSubmit={onSubmit} />);
 
     fireEvent.change(screen.getByTestId('input-first-name'), {
@@ -245,7 +243,6 @@ describe('SignupForm', () => {
     });
 
     // Wrap in act to ensure all promises resolve
-    // We normally don't need to do this, but looks like something to do with react hook forms
     // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       fireEvent.click(screen.getByTestId('submit-button'));

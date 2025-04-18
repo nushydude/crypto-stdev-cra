@@ -1,16 +1,17 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { fetchKLineData } from './fetchKLineData';
 import { appConfig } from '../config';
 
 describe('fetchKLineData', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should return klineData and avgPrice when the fetch is successful', async () => {
     const mockData = { klineData: [], avgPrice: 0 };
 
     // @ts-expect-error - we aren't mocking the whole fetch API
-    jest.spyOn(global, 'fetch').mockResolvedValue({
+    vi.spyOn(global, 'fetch').mockResolvedValue({
       json: () => Promise.resolve(mockData),
     });
 

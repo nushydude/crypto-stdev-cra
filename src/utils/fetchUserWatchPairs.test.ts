@@ -1,27 +1,28 @@
-import fetchUserWatchPairs from './fetchUserWatchPairs'; // Adjust the import path as necessary
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import fetchUserWatchPairs from './fetchUserWatchPairs';
 import * as Sentry from '@sentry/react';
 import { z } from 'zod';
 
-jest.mock('../config', () => ({
+vi.mock('../config', () => ({
   appConfig: {
     API_URI: 'https://example.com',
   },
 }));
 
-jest.mock('@sentry/react', () => ({
-  captureException: jest.fn(),
+vi.mock('@sentry/react', () => ({
+  captureException: vi.fn(),
 }));
 
 describe('fetchUserWatchPairs', () => {
-  const mockFetch = jest.fn();
+  const mockFetch = vi.fn();
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should call fetch with correct parameters and return watch pairs', async () => {
     mockFetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValue(['BTC-USD', 'ETH-USD']),
+      json: vi.fn().mockResolvedValue(['BTC-USD', 'ETH-USD']),
     });
 
     const result = await fetchUserWatchPairs(mockFetch);
@@ -40,7 +41,7 @@ describe('fetchUserWatchPairs', () => {
 
   it('should return an empty array and log a validation error to Sentry if response is invalid', async () => {
     mockFetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValue({ invalid: 'response' }), // Invalid response
+      json: vi.fn().mockResolvedValue({ invalid: 'response' }), // Invalid response
     });
 
     const result = await fetchUserWatchPairs(mockFetch);
@@ -62,7 +63,7 @@ describe('fetchUserWatchPairs', () => {
 
   it('should return an empty array if the response is empty', async () => {
     mockFetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValue([]),
+      json: vi.fn().mockResolvedValue([]),
     });
 
     const result = await fetchUserWatchPairs(mockFetch);

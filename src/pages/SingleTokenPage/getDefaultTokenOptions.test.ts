@@ -1,6 +1,12 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import { getDefaultTokenOptions } from './getDefaultTokenOptions';
 
 describe('getDefaultTokenOptions', () => {
+  beforeEach(() => {
+    // Clear localStorage before each test
+    localStorage.clear();
+  });
+
   it('should return default values when no query params are provided', () => {
     const result = getDefaultTokenOptions({});
 
