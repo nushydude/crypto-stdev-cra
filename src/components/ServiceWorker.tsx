@@ -1,28 +1,44 @@
-import { useEffect } from 'react';
-import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
-// import { toast } from 'react-toastify';
-// import { UpdateAvailableAlert } from './UpdateAvailableAlert';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { UpdateAvailableAlert } from './UpdateAvailableAlert';
 
 export const ServiceWorker = () => {
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+
+  // Listen for service worker events
   useEffect(() => {
-    console.info('sw registration no config');
+    if ('serviceWorker' in navigator) {
+      const handleControllerChange = () => {
+        setUpdateAvailable(true);
+      };
 
-    serviceWorkerRegistration.register({
-      onUpdate: (registration: ServiceWorkerRegistration) => {
-        console.info('Service worker: update available.');
+      const handleMessage = (event: MessageEvent) => {
+        if (event.data && event.data.type === 'UPDATE_AVAILABLE') {
+          setUpdateAvailable(true);
+        }
+      };
 
-        // toast.info(<UpdateAvailableAlert />, {
-        //   position: 'bottom-right',
-        //   autoClose: false,
-        //   hideProgressBar: true,
-        //   toastId: 'app_update_prompt',
-        // });
-      },
-      onSuccess: (registration: ServiceWorkerRegistration) => {
-        console.info('Service worker: successfully registered.');
-      },
-    });
+      navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange);
+      navigator.serviceWorker.addEventListener('message', handleMessage);
+
+      return () => {
+        navigator.serviceWorker.removeEventListener('controllerchange', handleControllerChange);
+        navigator.serviceWorker.removeEventListener('message', handleMessage);
+      };
+    }
   }, []);
+
+  // Show update notification when state changes
+  useEffect(() => {
+    if (updateAvailable) {
+      toast(({ closeToast }) => <UpdateAvailableAlert closeToast={closeToast} />, {
+        position: 'bottom-right',
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+      });
+    }
+  }, [updateAvailable]);
 
   return null;
 };

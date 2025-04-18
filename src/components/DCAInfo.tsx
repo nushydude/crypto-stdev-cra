@@ -5,7 +5,7 @@ interface Props {
 }
 
 export const DCAInfo = ({ targetPrice, avgPrice, shouldDCA }: Props) => {
-  const dip = ((avgPrice - targetPrice) / targetPrice) * 100;
+  const dip = targetPrice === 0 ? 0 : ((avgPrice - targetPrice) / targetPrice) * 100;
 
   return (
     <div data-testid="dca-info">

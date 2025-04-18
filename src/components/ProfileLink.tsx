@@ -17,7 +17,7 @@ const ProfileLink = ({ onClick, size = 44 }: Props) => {
         onClick && onClick();
       }}
     >
-      <MdAccountCircle size={size} />
+      <MdAccountCircle size={size} data-testid="profile-icon" />
     </Link>
   );
 };

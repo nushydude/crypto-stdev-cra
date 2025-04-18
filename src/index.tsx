@@ -12,7 +12,7 @@ import UserProvider from './providers/UserProvider';
 import { appConfig } from './config';
 
 Sentry.init({
-  dsn: appConfig.SENTRY_DSN,
+  dsn: appConfig.sentryDsn,
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration(),

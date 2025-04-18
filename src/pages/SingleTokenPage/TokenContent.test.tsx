@@ -1,9 +1,10 @@
 import { screen, render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import { describe, it, expect, vi } from 'vitest';
 import { FETCH_STATUS } from '../../consts/FetchStatus';
 import { TokenContent } from './TokenContent';
 
-jest.mock('../../components/KLineChart', () => ({
+vi.mock('../../components/KLineChart', () => ({
   KLineChart: () => <div data-testid="kline-chart" />,
 }));
 

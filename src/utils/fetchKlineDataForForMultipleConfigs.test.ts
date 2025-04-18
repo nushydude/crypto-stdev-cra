@@ -1,14 +1,15 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { fetchKlineDataForForMultipleConfigs } from './fetchKlineDataForForMultipleConfigs';
 import { fetchKLineData } from './fetchKLineData';
 import { Interval } from '../types/interval';
 
 // Mocking the fetchKLineData function
-jest.mock('./fetchKLineData');
+vi.mock('./fetchKLineData');
 
 describe('fetchKlineDataForForMultipleConfigs', () => {
   // Reset the mocks before each test
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should fetch Kline data for multiple configurations', async () => {
@@ -18,7 +19,7 @@ describe('fetchKlineDataForForMultipleConfigs', () => {
     ];
 
     // Setting up the mocked responses for the fetchKLineData function
-    (fetchKLineData as jest.Mock)
+    (fetchKLineData as ReturnType<typeof vi.fn>)
       .mockResolvedValueOnce({
         klineData: 'someDataForBTC',
         avgPrice: { price: '50000' },
@@ -58,7 +59,7 @@ describe('fetchKlineDataForForMultipleConfigs', () => {
     ];
 
     // Setting up the mocked rejection for the fetchKLineData function
-    (fetchKLineData as jest.Mock).mockRejectedValue(
+    (fetchKLineData as ReturnType<typeof vi.fn>).mockRejectedValue(
       new Error('Failed fetching data'),
     );
 

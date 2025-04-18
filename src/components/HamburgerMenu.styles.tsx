@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Bar = styled.div<{ menuVisible?: boolean }>`
+const Bar = styled.div<{ $menuVisible?: boolean }>`
   height: 4px;
   background-color: white;
   width: 24px;
@@ -8,34 +8,34 @@ const Bar = styled.div<{ menuVisible?: boolean }>`
 `;
 
 export const TopBar = styled(Bar)`
-  transform: ${({ menuVisible }) =>
-    `scale(${menuVisible ? 1 : 1}, 1) rotate(${menuVisible ? 45 : 0}deg)`};
+  transform: ${({ $menuVisible }) =>
+    `scale(${$menuVisible ? 1 : 1}, 1) rotate(${$menuVisible ? 45 : 0}deg)`};
   transform-origin: top left;
-  width: ${({ menuVisible }) => (menuVisible ? 30 : 24)}px;
+  width: ${({ $menuVisible }) => ($menuVisible ? 30 : 24)}px;
 `;
 
 export const MiddleBar = styled(Bar)`
-  opacity: ${({ menuVisible }) => (menuVisible ? 0 : 1)};
+  opacity: ${({ $menuVisible }) => ($menuVisible ? 0 : 1)};
 `;
 
 export const BottomBar = styled(Bar)`
-  transform: ${({ menuVisible }) =>
-    `scale(${menuVisible ? 1 : 1}, 1) rotate(${menuVisible ? -45 : 0}deg)`};
+  transform: ${({ $menuVisible }) =>
+    `scale(${$menuVisible ? 1 : 1}, 1) rotate(${$menuVisible ? -45 : 0}deg)`};
   transform-origin: bottom left;
-  width: ${({ menuVisible }) => (menuVisible ? 30 : 24)}px;
+  width: ${({ $menuVisible }) => ($menuVisible ? 30 : 24)}px;
 `;
 
 export const MenuContainer = styled.div<{
-  menuVisible: boolean;
-  offsetTop: number;
+  $menuVisible: boolean;
+  $offsetTop: number;
 }>`
   position: absolute;
   background-color: black;
   width: 100vw;
-  top: ${({ offsetTop }) => offsetTop}px;
+  top: ${({ $offsetTop }) => $offsetTop}px;
   left: -1rem;
-  height: ${({ menuVisible, offsetTop }) =>
-    menuVisible ? `calc(100vh - ${offsetTop}px)` : 0};
+  height: ${({ $menuVisible, $offsetTop }) =>
+    $menuVisible ? `calc(100vh - ${$offsetTop}px)` : 0};
   transition: all 0.3s ease-in-out;
   overflow: hidden;
   z-index: 999;

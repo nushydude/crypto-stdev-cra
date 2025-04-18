@@ -1,33 +1,27 @@
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { fetchWithToken } from './fetchWithToken';
 
 describe('fetchWithToken', () => {
   const mockUrl = 'https://api.example.com/data';
   const mockOptions = { method: 'GET' };
 
-  let mockFetch: jest.Mock;
-  let mockRefreshAccessToken: jest.Mock;
-  let mockSetAccessToken: jest.Mock;
-
   beforeEach(() => {
-    mockFetch = jest.fn();
-    global.fetch = mockFetch;
-
-    mockRefreshAccessToken = jest.fn();
-    mockSetAccessToken = jest.fn();
+    vi.stubGlobal('fetch', vi.fn());
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.unstubAllGlobals();
   });
 
   it('should make a request with the access token', async () => {
+    const mockFetch = global.fetch as ReturnType<typeof vi.fn>;
     mockFetch.mockResolvedValueOnce({ status: 200 } as Response);
 
     const response = await fetchWithToken({
       url: mockUrl,
       options: mockOptions,
       accessToken: 'initial-token',
-      refreshAccessToken: mockRefreshAccessToken,
+      refreshAccessToken: vi.fn().mockResolvedValueOnce('token'),
     });
 
     expect(mockFetch).toHaveBeenCalledWith(mockUrl, {
@@ -38,10 +32,13 @@ describe('fetchWithToken', () => {
   });
 
   it('should refresh the access token and retry the request if the first request is unauthorized', async () => {
+    const mockFetch = global.fetch as ReturnType<typeof vi.fn>;
+    const mockRefreshAccessToken = vi.fn().mockResolvedValueOnce('new-token');
+    const mockSetAccessToken = vi.fn();
+
     mockFetch
       .mockResolvedValueOnce({ status: 401 } as Response)
       .mockResolvedValueOnce({ status: 200 } as Response);
-    mockRefreshAccessToken.mockResolvedValueOnce('new-token');
 
     const response = await fetchWithToken({
       url: mockUrl,
@@ -66,10 +63,12 @@ describe('fetchWithToken', () => {
   });
 
   it('should throw an error if the refresh token process fails', async () => {
-    mockFetch.mockResolvedValueOnce({ status: 401 } as Response);
-    mockRefreshAccessToken.mockRejectedValueOnce(
+    const mockFetch = global.fetch as ReturnType<typeof vi.fn>;
+    const mockRefreshAccessToken = vi.fn().mockRejectedValueOnce(
       new Error('Refresh token failed'),
     );
+
+    mockFetch.mockResolvedValueOnce({ status: 401 } as Response);
 
     await expect(
       fetchWithToken({
@@ -85,12 +84,13 @@ describe('fetchWithToken', () => {
   });
 
   it('should use default options if none are provided', async () => {
+    const mockFetch = global.fetch as ReturnType<typeof vi.fn>;
     mockFetch.mockResolvedValueOnce({ status: 200 } as Response);
 
     const response = await fetchWithToken({
       url: mockUrl,
       accessToken: 'initial-token',
-      refreshAccessToken: mockRefreshAccessToken,
+      refreshAccessToken: vi.fn().mockResolvedValueOnce('token'),
     });
 
     expect(mockFetch).toHaveBeenCalledWith(mockUrl, {

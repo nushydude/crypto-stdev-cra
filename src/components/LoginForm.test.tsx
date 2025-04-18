@@ -5,11 +5,12 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import LoginForm from './LoginForm';
 
 describe('LoginForm', () => {
   it('renders the login form', () => {
-    render(<LoginForm onSubmit={jest.fn()} />);
+    render(<LoginForm onSubmit={vi.fn()} />);
 
     expect(screen.getByTestId('form-login')).toBeInTheDocument();
     expect(screen.getByTestId('input-email')).toBeInTheDocument();
@@ -18,7 +19,7 @@ describe('LoginForm', () => {
   });
 
   it('displays error messages for empty fields on submit', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<LoginForm onSubmit={onSubmit} />);
 
     fireEvent.click(screen.getByTestId('submit-button'));
@@ -36,7 +37,7 @@ describe('LoginForm', () => {
   });
 
   it('calls onSubmit with email and password when form is submitted correctly', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<LoginForm onSubmit={onSubmit} />);
 
     fireEvent.change(screen.getByTestId('input-email'), {
@@ -56,14 +57,13 @@ describe('LoginForm', () => {
   });
 
   it('does not call onSubmit when email is missing', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<LoginForm onSubmit={onSubmit} />);
 
     fireEvent.change(screen.getByTestId('input-password'), {
       target: { value: 'password' },
     });
 
-    // We normally don't need to do this, but looks like something to do with react hook forms
     // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       fireEvent.click(screen.getByTestId('submit-button'));
@@ -75,21 +75,18 @@ describe('LoginForm', () => {
   });
 
   it('does not call onSubmit when password is missing', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<LoginForm onSubmit={onSubmit} />);
 
     fireEvent.change(screen.getByTestId('input-email'), {
       target: { value: 'user@example.com' },
     });
 
-    // Wrap in act to ensure all promises resolve
-    // We normally don't need to do this, but looks like something to do with react hook forms
     // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       fireEvent.click(screen.getByTestId('submit-button'));
     });
 
-    // Assertions can be done outside act since there are no more expected state updates
     expect(onSubmit).not.toHaveBeenCalled();
   });
 });

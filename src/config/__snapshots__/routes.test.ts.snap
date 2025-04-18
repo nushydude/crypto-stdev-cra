@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`routes should match snapshot 1`] = `
-Object {
+exports[`routes > should match snapshot 1`] = `
+{
   "BEST_BUY": "/best-buy",
   "BEST_DCA": "/best-dca",
   "CFAGI": "/cfagi",
