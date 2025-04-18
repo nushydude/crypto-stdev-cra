@@ -1,5 +1,4 @@
 import { useHistory } from 'react-router-dom';
-import { routes } from '../config/routes';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/user';
 
@@ -9,7 +8,7 @@ const useRedirectOnLogin = (redirectTo: string) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.replace(routes.SINGLE);
+      history.replace(redirectTo);
     }
   }, [isLoggedIn, history]);
 };

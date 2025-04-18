@@ -1,34 +1,44 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { UpdateAvailableAlert } from './UpdateAvailableAlert';
 
 export const ServiceWorker = () => {
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+
+  // Listen for service worker events
   useEffect(() => {
-    // Listen for the PWA update event
-    const handleUpdate = (event: CustomEvent) => {
-      console.info('Service worker: update available.');
-      
-      toast.info(({ closeToast }) => <UpdateAvailableAlert closeToast={closeToast} />, {
+    if ('serviceWorker' in navigator) {
+      const handleControllerChange = () => {
+        setUpdateAvailable(true);
+      };
+
+      const handleMessage = (event: MessageEvent) => {
+        if (event.data && event.data.type === 'UPDATE_AVAILABLE') {
+          setUpdateAvailable(true);
+        }
+      };
+
+      navigator.serviceWorker.addEventListener('controllerchange', handleControllerChange);
+      navigator.serviceWorker.addEventListener('message', handleMessage);
+
+      return () => {
+        navigator.serviceWorker.removeEventListener('controllerchange', handleControllerChange);
+        navigator.serviceWorker.removeEventListener('message', handleMessage);
+      };
+    }
+  }, []);
+
+  // Show update notification when state changes
+  useEffect(() => {
+    if (updateAvailable) {
+      toast(({ closeToast }) => <UpdateAvailableAlert closeToast={closeToast} />, {
         position: 'bottom-right',
         autoClose: false,
-        hideProgressBar: true,
-        toastId: 'app_update_prompt',
+        closeOnClick: false,
+        draggable: false,
       });
-    };
-
-    // Listen for the PWA success event
-    const handleSuccess = (event: CustomEvent) => {
-      console.info('Service worker: successfully registered.');
-    };
-
-    window.addEventListener('vite-pwa:update', handleUpdate as EventListener);
-    window.addEventListener('vite-pwa:success', handleSuccess as EventListener);
-
-    return () => {
-      window.removeEventListener('vite-pwa:update', handleUpdate as EventListener);
-      window.removeEventListener('vite-pwa:success', handleSuccess as EventListener);
-    };
-  }, []);
+    }
+  }, [updateAvailable]);
 
   return null;
 };

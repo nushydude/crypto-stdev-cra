@@ -1,7 +1,6 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import fetchUserWatchPairs from './fetchUserWatchPairs';
 import * as Sentry from '@sentry/react';
-import { z } from 'zod';
 
 vi.mock('../config', () => ({
   appConfig: {

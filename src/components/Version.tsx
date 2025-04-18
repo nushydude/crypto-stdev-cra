@@ -37,7 +37,7 @@ const Version = ({ clickCountThresholdToRedirectToPlayground = 6 }: Props) => {
 
   return (
     <span className="inline-block" onClick={increment}>
-      build {appConfig.BUILD_NUMBER}
+      build {appConfig.buildNumber}
     </span>
   );
 };

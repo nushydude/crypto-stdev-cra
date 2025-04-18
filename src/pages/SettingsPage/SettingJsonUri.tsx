@@ -24,7 +24,7 @@ interface Props {
 const SettingsJsonUri = ({ onUpdate }: Props) => {
   const [uri, setUri, removeUri] = useLocalStorage('settings-json-uri', '');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setSettings, removeSettings] = useLocalStorage(
+  const [_, setSettings] = useLocalStorage(
     'settings',
     JSON.stringify(DEFAULT_SETTINGS),
   );
