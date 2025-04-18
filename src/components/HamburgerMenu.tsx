@@ -39,12 +39,12 @@ export const HamburgerMenu = ({ headerHeight, links }: Props) => {
         onClick={() => setMenuVisible((visible) => !visible)}
         className="flex flex-col justify-between h-6 w-6 bg-transparent border-none outline-none cursor-pointer"
       >
-        <TopBar menuVisible={menuVisible} />
-        <MiddleBar menuVisible={menuVisible} />
-        <BottomBar menuVisible={menuVisible} />
+        <TopBar $menuVisible={menuVisible} />
+        <MiddleBar $menuVisible={menuVisible} />
+        <BottomBar $menuVisible={menuVisible} />
       </button>
 
-      <MenuContainer menuVisible={menuVisible} offsetTop={headerHeight}>
+      <MenuContainer $menuVisible={menuVisible} $offsetTop={headerHeight}>
         {links.map(({ to, label, icon }, idx) => (
           <Link key={idx} to={to} className="no-underline">
             <div

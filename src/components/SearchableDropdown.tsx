@@ -69,7 +69,6 @@ const SearchableDropdown: React.FC<Props> = ({
     </div>
   );
 
-  console.log('rendering');
 
   return (
     <div className="relative w-full z-30" ref={ref}>
