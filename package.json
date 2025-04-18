@@ -74,12 +74,12 @@
     "cypress": "cypress open",
     "prepare": "husky install",
     "format": "prettier --write src/**/*.ts*",
-    "generate-icons": "node scripts/generate-icons.js"
+    "generate-icons": "node scripts/generate-icons.js",
+    "type-check": "tsc --noEmit"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
