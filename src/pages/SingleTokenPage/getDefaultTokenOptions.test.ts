@@ -1,6 +1,10 @@
 import { getDefaultTokenOptions } from './getDefaultTokenOptions';
 
 describe('getDefaultTokenOptions', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   it('should return default values when no query params are provided', () => {
     const result = getDefaultTokenOptions({});
 

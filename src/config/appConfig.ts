@@ -3,7 +3,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 const buildNumber = isProduction ? process.env.REACT_APP_BUILD_NUMBER : 'dev';
 
 export const appConfig = {
-  API_URI: 'https://crypto-stdev-express.vercel.app',
+  API_URI:
+    process.env.REACT_APP_API_URI || 'https://crypto-stdev-express.vercel.app',
   BUILD_NUMBER: buildNumber,
   SENTRY_DSN: process.env.REACT_APP_SENTRY_DSN,
 };

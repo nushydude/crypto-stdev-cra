@@ -17,10 +17,10 @@ describe('DCAInfo component', () => {
 
     expect(screen.getByTestId('dca-info')).toBeInTheDocument();
     expect(
-      screen.getByText(`Target price = ${targetPrice.toFixed(4)}`),
+      screen.getByText(`Target price = ${targetPrice.toFixed(6)}`),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(`Spot price = ${avgPrice.toFixed(4)}`),
+      screen.getByText(`Spot price = ${avgPrice.toFixed(6)}`),
     ).toBeInTheDocument();
 
     const dip = ((avgPrice - targetPrice) / targetPrice) * 100;
